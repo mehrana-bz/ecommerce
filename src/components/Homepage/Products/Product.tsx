@@ -6,7 +6,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 const Product = ({product}) => {
   const markedStarsCount = Math.floor(Math.random() * 5);
-
+  console.log(product);
   
   return (
     <div>
