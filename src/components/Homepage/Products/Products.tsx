@@ -45,7 +45,7 @@ const Products = () => {
           <Row>
             {products.map((product) => (
               <Col key={product.id} sm={4} className="my-3">
-                <Product product={product} className=""/>
+                <Product product={product}/>
               </Col>
             ))}
           </Row>
