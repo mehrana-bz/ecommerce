@@ -21,16 +21,30 @@ const Products = () => {
 
   //useStates
   const [isLoading, setIsLoading] = useState(true);
+  const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
-    axios
+    const limit = 20;
+
+    const p1 = axios
       .get("https://api.escuelajs.co/api/v1/products")
       .then((res) => res.data)
       .then((productsData) => {
-        setIsLoading(false);
+        setPageCount(Math.ceil(productsData.length / limit));
+      });
+
+    const p2 = axios
+      .get(`https://api.escuelajs.co/api/v1/products?offset=0&limit=${limit}`)
+      .then((res) => res.data)
+      .then((productsData) => {
+        console.log(productsData);
         // setProducts(productsData);
         dispatch(addProductsToStore(productsData));
       });
+
+    Promise.all([p1, p2]).finally(() => {
+      setIsLoading(false);
+    });
   }, []);
 
   return (
@@ -45,11 +59,11 @@ const Products = () => {
           <Row>
             {products.map((product) => (
               <Col key={product.id} sm={4} className="my-3">
-                <Product product={product}/>
+                <Product product={product} />
               </Col>
             ))}
           </Row>
-          <PaginationPart />
+          <PaginationPart pageCount={pageCount} />
         </>
       )}
       {!isLoading && products.length === 0 && <div>😥 No Result found!!!</div>}
