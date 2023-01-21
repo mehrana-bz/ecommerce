@@ -21,13 +21,24 @@ const Products = () => {
 
   //useStates
   const [isLoading, setIsLoading] = useState(true);
+  const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
+    const limit = 20;
+
     axios
-      .get("https://api.escuelajs.co/api/v1/products")
+    .get("https://api.escuelajs.co/api/v1/products")
+    .then((res) => res.data)
+    .then((productsData) => {
+      setPageCount(Math.ceil(productsData.length/limit));
+    });
+
+    axios
+      .get(`https://api.escuelajs.co/api/v1/products?offset=0&limit=${limit}`)
       .then((res) => res.data)
       .then((productsData) => {
         setIsLoading(false);
+        console.log(productsData);
         // setProducts(productsData);
         dispatch(addProductsToStore(productsData));
       });
@@ -49,7 +60,7 @@ const Products = () => {
               </Col>
             ))}
           </Row>
-          <PaginationPart />
+          <PaginationPart  pageCount={pageCount}/>
         </>
       )}
       {!isLoading && products.length === 0 && <div>😥 No Result found!!!</div>}

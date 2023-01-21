@@ -16,7 +16,6 @@ const Product = ({ product }) => {
       <Card.Body className="flex-grow-0">
         <Card.Title>{product.title}</Card.Title>
         <div className="rates">
-          {/* {product.price < 500 ?} */}
           <FontAwesomeIcon
             icon={faStar}
             color={markedStarsCount >= 1 ? "yellow" : "gray"}
