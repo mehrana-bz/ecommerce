@@ -7,8 +7,8 @@ import {
   selectProducts,
 } from "../../../store/states/products";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
-import Product from "./Product";
-import PaginationPart from "./PaginationPart";
+import Product from "./Product/Product";
+import PaginationPart from "./pagination/PaginationPart";
 
 const Products = () => {
   // const [products , setProducts] = useState([]);
