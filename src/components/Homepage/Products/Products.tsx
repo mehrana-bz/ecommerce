@@ -8,16 +8,19 @@ import {
 } from "../../../store/states/products";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 import Product from "./Product";
-
-
+import PaginationPart from "./PaginationPart";
 
 const Products = () => {
-  const dispatch = useDispatch();
   // const [products , setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
+  //dispatch
+  const dispatch = useDispatch();
+
+  //useSelectors
   const products = useSelector(selectProducts);
-  // const isLoading = useSelector(selectIsLoading);
+
+  //useStates
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -38,17 +41,18 @@ const Products = () => {
         </Spinner>
       )}
       {!isLoading && products.length !== 0 && (
-        <Row>
-          {products.map((product) => (
-            <Col key={product.id}>
-              <Product product={product} sm={3} className="mb-2" />
-            </Col>
-          ))}
-        </Row>
+        <>
+          <Row>
+            {products.map((product) => (
+              <Col key={product.id} sm={4} className="my-3">
+                <Product product={product} className=""/>
+              </Col>
+            ))}
+          </Row>
+          <PaginationPart />
+        </>
       )}
-      {!isLoading && products.length === 0 && (
-        <div>😥 No Result found!!!</div>
-      )}
+      {!isLoading && products.length === 0 && <div>😥 No Result found!!!</div>}
     </>
   );
 };
