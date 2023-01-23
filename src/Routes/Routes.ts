@@ -1,5 +1,5 @@
 const Routes ={
     Homepage : '/',
-    Page: '/page/:page',
+    Page: '/page/:number',
 }
 export default Routes;
