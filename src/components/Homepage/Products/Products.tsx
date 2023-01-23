@@ -9,6 +9,9 @@ import {
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 import Product from "./Product/Product";
 import PaginationPart from "./pagination/PaginationPart";
+import { useParams } from "react-router-dom";
+
+const limit = 20;
 
 const Products = () => {
   // const [products , setProducts] = useState([]);
@@ -23,29 +26,36 @@ const Products = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [pageCount, setPageCount] = useState(0);
 
-  useEffect(() => {
-    const limit = 20;
+  //get routes parts in url with useParams
+  const { number: pageNumber = 1 } = useParams();
+  const currentPage = parseInt(pageNumber);
 
+  useEffect(() => {
     const p1 = axios
       .get("https://api.escuelajs.co/api/v1/products")
       .then((res) => res.data)
       .then((productsData) => {
         setPageCount(Math.ceil(productsData.length / limit));
       });
+  }, []);
 
+  useEffect(() => {
+    setIsLoading(true);
     const p2 = axios
-      .get(`https://api.escuelajs.co/api/v1/products?offset=0&limit=${limit}`)
+      .get(
+        `https://api.escuelajs.co/api/v1/products?offset=${
+          (currentPage - 1) * limit
+        }&limit=${limit}`
+      )
       .then((res) => res.data)
       .then((productsData) => {
-        console.log(productsData);
         // setProducts(productsData);
         dispatch(addProductsToStore(productsData));
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-
-    Promise.all([p1, p2]).finally(() => {
-      setIsLoading(false);
-    });
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -63,7 +73,7 @@ const Products = () => {
               </Col>
             ))}
           </Row>
-          <PaginationPart pageCount={pageCount} />
+          <PaginationPart pageCount={pageCount} currentPage={currentPage} />
         </>
       )}
       {!isLoading && products.length === 0 && <div>😥 No Result found!!!</div>}

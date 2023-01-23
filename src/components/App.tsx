@@ -1,22 +1,31 @@
+//@ts-nocheck
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.scss";
 import Layout from "./Layout/Layout";
 import Homepage from "./Homepage/Homepage";
 import Routes from "../Routes/Routes";
+import Product from "./Homepage/Products/Product/Product";
+
+const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    children:[
+      {
+        path: Routes.Homepage,
+        element:<Homepage/>,
+        children: [
+          {
+            path: Routes.Page,
+          }
+        ]
+
+      },
+    ]
+  }
+])
 
 function App() {
-  const router = createBrowserRouter([
-    {
-      path:Routes.Homepage,
-      element: <Layout/>,
-      children:[
-        {
-          index: true,
-          element:<Homepage/>
-        }
-      ]
-    }
-  ])
+ 
   return (
     <div className="App">
       <RouterProvider router={router}/>
