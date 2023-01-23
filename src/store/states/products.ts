@@ -6,8 +6,8 @@ const slice = createSlice({
     initialState : [],
     reducers: {
         // actionName: reducer
-        addProductsToStore: (state , action) => {
-            return state.concat(action.payload);
+        addProductsToStore: (_ , action) => {
+            return action.payload;
         }
     }
 });

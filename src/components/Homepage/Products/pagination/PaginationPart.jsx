@@ -11,8 +11,9 @@ import classNames from "classnames";
 </NavLink> */
 }
 
-const PaginationPart = ({ pageCount }) => {
+const PaginationPart = ({ pageCount , currentPage=1}) => {
   const navigate = useNavigate();
+  
 
   const handleChangePage = (href) => (e) => {
     e.preventDefault();
@@ -28,6 +29,7 @@ const PaginationPart = ({ pageCount }) => {
         className={styles.borderColor}
         href={href}
         onClick={handleChangePage(href)}
+        active={currentPage===page}
       >
         {page}
       </Pagination.Item>
