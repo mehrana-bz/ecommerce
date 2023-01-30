@@ -9,18 +9,34 @@ import {
 } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSearch, selectSearch } from "../../store/states/search";
+import { selectIsLoading, setIsLoading } from "../../store/states/isLoading";
+import axios from "axios";
 
 const Header = () => {
+  //dispatch
   const dispatch = useAppDispatch();
+  //useSelector
   const search = useAppSelector(selectSearch);
+  const isLoading = useAppSelector(selectIsLoading);
 
   const handleSearchValue = ({ target: { value } }) => {
     dispatch(setSearch(value));
   };
   const handleSearchSubmit = (e) => {
     e.preventDefault();
+    dispatch(setIsLoading(true));
     // show loading again
-    // show related
+    // remaining posts
+    //load posts
+    axios.get(`https://api.escuelajs.co/api/v1/products/?title=${search}`)
+    .then((res) => res.data)
+    .then((searchedProducts) => {
+
+    })
+
+
+
+    
   };
 
   return (

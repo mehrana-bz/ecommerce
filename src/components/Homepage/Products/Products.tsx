@@ -1,7 +1,7 @@
 //@ts-nocheck
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   addProductsToStore,
   selectProducts,
@@ -10,6 +10,8 @@ import { Col, Container, Row, Spinner } from "react-bootstrap";
 import Product from "./Product/Product";
 import PaginationPart from "./pagination/PaginationPart";
 import { useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { selectIsLoading, setIsLoading } from "../../../store/states/isLoading";
 
 const limit = 20;
 
@@ -17,13 +19,14 @@ const Products = () => {
   // const [products , setProducts] = useState([]);
 
   //dispatch
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   //useSelectors
-  const products = useSelector(selectProducts);
+  const products = useAppSelector(selectProducts);
+  const isLoading = useAppSelector(selectIsLoading);
 
   //useStates
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [pageCount, setPageCount] = useState(0);
 
   //get routes parts in url with useParams
@@ -40,7 +43,7 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
-    setIsLoading(true);
+    dispatch(setIsLoading(true));
     const p2 = axios
       .get(
         `https://api.escuelajs.co/api/v1/products?offset=${
@@ -53,7 +56,7 @@ const Products = () => {
         dispatch(addProductsToStore(productsData));
       })
       .finally(() => {
-        setIsLoading(false);
+        dispatch(setIsLoading(false));
       });
   }, [currentPage]);
 
