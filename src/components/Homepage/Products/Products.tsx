@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   addProductsToStore,
+  getPageCount,
+  getPaginatedProducts,
   selectProducts,
 } from "../../../store/states/products";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
@@ -14,7 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { selectIsLoading, setIsLoading } from "../../../store/states/isLoading";
 import { selectPageCount, setPageCount } from "../../../store/states/pageCount";
 
-const limit = 20;
+
 
 const Products = () => {
   // const [products , setProducts] = useState([]);
@@ -36,30 +38,11 @@ const Products = () => {
   const currentPage = parseInt(pageNumber);
 
   useEffect(() => {
-    const p1 = axios
-      .get("https://api.escuelajs.co/api/v1/products")
-      .then((res) => res.data)
-      .then((productsData) => {
-        dispatch(setPageCount(Math.ceil(productsData.length / limit)));
-      });
+     dispatch(getPageCount());
   }, []);
 
   useEffect(() => {
-    dispatch(setIsLoading(true));
-    const p2 = axios
-      .get(
-        `https://api.escuelajs.co/api/v1/products?offset=${
-          (currentPage - 1) * limit
-        }&limit=${limit}`
-      )
-      .then((res) => res.data)
-      .then((productsData) => {
-        // setProducts(productsData);
-        dispatch(addProductsToStore(productsData));
-      })
-      .finally(() => {
-        dispatch(setIsLoading(false));
-      });
+    dispatch(getPaginatedProducts(currentPage));
   }, [currentPage]);
 
   return (
