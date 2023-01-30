@@ -6,12 +6,11 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 const Product = ({ product }) => {
   const markedStarsCount = Math.floor(Math.random() * 5);
-  console.log(product);
 
   return (
     <Card className="h-100">
       <div className="ratio ratio-16x9">
-        <Card.Img variant="top" src={product.images} className={styles.pics}/>
+        <Card.Img variant="top" src={product.images} className={styles.pics} />
       </div>
       <Card.Body className="flex-grow-0">
         <Card.Title>{product.title}</Card.Title>
@@ -34,10 +33,12 @@ const Product = ({ product }) => {
           />
           <FontAwesomeIcon
             icon={faStar}
-            color={markedStarsCount == 5 ? "yellow" : "gray"}
+            color={markedStarsCount === 5 ? "yellow" : "gray"}
           />
         </div>
-        <Card.Text className={styles.cardDescription}>{product.description}</Card.Text>
+        <Card.Text className={styles.cardDescription}>
+          {product.description}
+        </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush mt-auto">
         <ListGroup.Item>Cras justo odio</ListGroup.Item>

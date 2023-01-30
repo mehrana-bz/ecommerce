@@ -1,8 +1,31 @@
-import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
+//@ts-nocheck
+import {
+  Button,
+  Container,
+  Nav,
+  NavDropdown,
+  Navbar,
+  Form,
+} from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { setSearch, selectSearch } from "../../store/states/search";
+
 const Header = () => {
+  const dispatch = useAppDispatch();
+  const search = useAppSelector(selectSearch);
+
+  const handleSearchValue = ({ target: { value } }) => {
+    dispatch(setSearch(value));
+  };
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    // show loading again
+    // show related
+  };
+
   return (
-    <>
-      <Navbar bg="primary" variant="dark">
+    <header className="pt-5">
+      <Navbar bg="primary" variant="light" fixed="top">
         <Container>
           <Navbar.Brand href="#home">
             <svg
@@ -33,11 +56,11 @@ const Header = () => {
               <NavDropdown
                 id="nav-dropdown-dark-example"
                 title={
-                    <>
+                  <>
                     view all
                     <br />
-                     categories
-                    </>
+                    categories
+                  </>
                 }
                 menuVariant="light"
               >
@@ -55,9 +78,20 @@ const Header = () => {
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
+          <Form onSubmit={handleSearchSubmit} className="d-flex w-50">
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+              onInput={handleSearchValue}
+              value={search}
+            />
+            <Button variant="outline-success">Search</Button>
+          </Form>
         </Container>
       </Navbar>
-    </>
+    </header>
   );
 };
 export default Header;

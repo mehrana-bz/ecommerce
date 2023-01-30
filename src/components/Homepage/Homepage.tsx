@@ -8,7 +8,7 @@ const Homepage = () => {
   return (
     <div className="Homepage">
       <Container>
-        <Row>
+        <Row className="mt-5">
           <Col sm={3}>
             <Aside />
           </Col>
