@@ -12,6 +12,7 @@ import PaginationPart from "./pagination/PaginationPart";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { selectIsLoading, setIsLoading } from "../../../store/states/isLoading";
+import { selectPageCount, setPageCount } from "../../../store/states/pageCount";
 
 const limit = 20;
 
@@ -24,10 +25,11 @@ const Products = () => {
   //useSelectors
   const products = useAppSelector(selectProducts);
   const isLoading = useAppSelector(selectIsLoading);
+  const pageCount = useAppSelector(selectPageCount);
 
   //useStates
   // const [isLoading, setIsLoading] = useState(true);
-  const [pageCount, setPageCount] = useState(0);
+  // const [pageCount, setPageCount] = useState(0);
 
   //get routes parts in url with useParams
   const { number: pageNumber = 1 } = useParams();
@@ -38,7 +40,7 @@ const Products = () => {
       .get("https://api.escuelajs.co/api/v1/products")
       .then((res) => res.data)
       .then((productsData) => {
-        setPageCount(Math.ceil(productsData.length / limit));
+        dispatch(setPageCount(Math.ceil(productsData.length / limit)));
       });
   }, []);
 
