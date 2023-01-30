@@ -11,10 +11,16 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSearch, selectSearch } from "../../store/states/search";
 import { selectIsLoading, setIsLoading } from "../../store/states/isLoading";
 import axios from "axios";
+import { getPageCount, getPaginatedProducts } from "../../store/states/products";
+import { generatePath, useNavigate } from "react-router-dom";
+import Routes from "../../Routes/Routes";
 
 const Header = () => {
+
   //dispatch
   const dispatch = useAppDispatch();
+  //useNavigate
+  const navigate = useNavigate();
   //useSelector
   const search = useAppSelector(selectSearch);
   const isLoading = useAppSelector(selectIsLoading);
@@ -24,19 +30,12 @@ const Header = () => {
   };
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    dispatch(setIsLoading(true));
+    navigate(generatePath(Routes.Homepage));
     // show loading again
     // remaining posts
     //load posts
-    axios.get(`https://api.escuelajs.co/api/v1/products/?title=${search}`)
-    .then((res) => res.data)
-    .then((searchedProducts) => {
-
-    })
-
-
-
-    
+    dispatch(getPageCount());
+    dispatch(getPaginatedProducts(1));
   };
 
   return (
@@ -103,7 +102,7 @@ const Header = () => {
               onInput={handleSearchValue}
               value={search}
             />
-            <Button variant="outline-success">Search</Button>
+            <Button variant="outline-success" type="submit">Search</Button>
           </Form>
         </Container>
       </Navbar>
