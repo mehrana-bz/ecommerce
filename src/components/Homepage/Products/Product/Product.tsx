@@ -11,10 +11,10 @@ const Product = ({ product }) => {
   return (
     <Card className="h-100">
       <div className="ratio ratio-16x9">
-        <Card.Img variant="top" src={product.images} className={styles.pics} />
+        <Card.Img variant="top" src={product.category.image} className={styles.pics} />
       </div>
-      <Card.Body className="flex-grow-0">
-        <Card.Title>{product.title}</Card.Title>
+      <Card.Body className="d-flex flex-column bg-light">
+        <Card.Title>{product.category.name}</Card.Title>
         <div className="rates">
           <FontAwesomeIcon
             icon={faStar}

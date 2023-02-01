@@ -1,9 +1,12 @@
+import { Col, Row } from "react-bootstrap";
 
 const Aside = () =>{
     return (
-        <div>
-            this is Aside component
-        </div>
+        <Row>
+            <Col>
+                
+            </Col>
+        </Row>
     );
 }
 
