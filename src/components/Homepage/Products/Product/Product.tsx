@@ -1,19 +1,20 @@
 //@ts-nocheck
-import { Card, ListGroup } from "react-bootstrap";
+import { Button, Card, ListGroup } from "react-bootstrap";
 import styles from "./Product.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 const Product = ({ product }) => {
   const markedStarsCount = Math.floor(Math.random() * 5);
 
   return (
     <Card className="h-100">
       <div className="ratio ratio-16x9">
-        <Card.Img variant="top" src={product.images} className={styles.pics} />
+        <Card.Img variant="top" src={product.category.image} className={styles.pics} />
       </div>
-      <Card.Body className="flex-grow-0">
-        <Card.Title>{product.title}</Card.Title>
+      <Card.Body className="d-flex flex-column bg-light">
+        <Card.Title>{product.category.name}</Card.Title>
         <div className="rates">
           <FontAwesomeIcon
             icon={faStar}
@@ -39,15 +40,15 @@ const Product = ({ product }) => {
         <Card.Text className={styles.cardDescription}>
           {product.description}
         </Card.Text>
-      </Card.Body>
-      <ListGroup className="list-group-flush mt-auto">
-        <ListGroup.Item>Cras justo odio</ListGroup.Item>
-        <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-        <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-      </ListGroup>
-      <Card.Body className="flex-grow-0">
-        <Card.Link href="#">Card Link</Card.Link>
-        <Card.Link href="#">Another Link</Card.Link>
+        <Card.Text className="small">{product.title}</Card.Text>
+
+        <div className="d-flex justify-content-between mt-auto">
+          <Card.Text className={styles.style}>{product.price}</Card.Text>
+          <Button variant="primary" className="px-4">
+            <FontAwesomeIcon icon={faPlus} />
+            <FontAwesomeIcon icon={faCartShopping} size="md" />
+          </Button>
+        </div>
       </Card.Body>
     </Card>
   );

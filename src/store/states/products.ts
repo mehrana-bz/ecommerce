@@ -26,7 +26,7 @@ export const selectProducts = (store: RootState) => store.products;
 
 //action
 //first axios to get all products
-const limit = 10;
+const limit = 25;
 export const getPageCount = () => (dispatch, getState) => {
   const state = getState();
 
@@ -40,6 +40,7 @@ export const getPageCount = () => (dispatch, getState) => {
     )
     .then((res) => res.data)
     .then((productsData) => {
+      console.log(productsData);
       dispatch(setPageCount(Math.ceil(productsData.length / limit)));
     });
 };
