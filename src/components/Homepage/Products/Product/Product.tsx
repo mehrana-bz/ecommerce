@@ -5,13 +5,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import DescriptionLengthControl from "./DescriptionLengthControl";
+
 const Product = ({ product }) => {
   const markedStarsCount = Math.floor(Math.random() * 5);
 
   return (
     <Card className="h-100">
       <div className="ratio ratio-16x9">
-        <Card.Img variant="top" src={product.category.image} className={styles.pics} />
+        <Card.Img
+          variant="top"
+          src={product.category.image}
+          className={styles.pics}
+        />
       </div>
       <Card.Body className="d-flex flex-column bg-light">
         <Card.Title>{product.category.name}</Card.Title>
@@ -37,16 +43,13 @@ const Product = ({ product }) => {
             color={markedStarsCount === 5 ? "yellow" : "gray"}
           />
         </div>
-        <Card.Text className={styles.cardDescription}>
-          {product.description}
-        </Card.Text>
+        <DescriptionLengthControl product={product} />
         <Card.Text className="small">{product.title}</Card.Text>
-
         <div className="d-flex justify-content-between mt-auto">
           <Card.Text className={styles.style}>{product.price}</Card.Text>
           <Button variant="primary" className="px-4">
             <FontAwesomeIcon icon={faPlus} />
-            <FontAwesomeIcon icon={faCartShopping} size="md" />
+            <FontAwesomeIcon icon={faCartShopping} />
           </Button>
         </div>
       </Card.Body>
