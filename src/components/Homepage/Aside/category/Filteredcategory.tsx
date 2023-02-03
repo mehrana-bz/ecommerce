@@ -1,7 +1,7 @@
 //@ts-nocheck
 import axios from "axios";
 import { useEffect, useState } from "react";
-import styles from "./Filteredcategory.module.scss"
+import styles from "./Filteredcategory.module.scss";
 const Filteredcategory = () => {
   const [categoryItems, setCategories] = useState([]);
   useEffect(() => {
@@ -21,11 +21,17 @@ const Filteredcategory = () => {
 
   return (
     <div>
+      <h5>CATEGORY</h5>
       <ul className={styles.listStyle}>
-        <h5>CATEGORY</h5>
         {categoryItems.map((category) => (
           <li key={category.id}>
-            <input className="form-check-input mx-2" type="checkbox" value="" id={category.id}/>
+            <input
+              className="form-check-input mx-2"
+              type="radio"
+              name="flexRadioDefault"
+              value=""
+              id={category.id}
+            />
             <label className="form-check-label" htmlFor={category.id}>
               {category.name}
             </label>

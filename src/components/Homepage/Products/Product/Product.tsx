@@ -9,7 +9,6 @@ import DescriptionLengthControl from "./DescriptionLengthControl";
 
 const Product = ({ product }) => {
   const markedStarsCount = Math.floor(Math.random() * 5);
-  
 
   return (
     <Card className="h-100">
@@ -44,7 +43,7 @@ const Product = ({ product }) => {
             color={markedStarsCount === 5 ? "yellow" : "gray"}
           />
         </div>
-        <DescriptionLengthControl  product={ product }/>
+        <DescriptionLengthControl product={product} />
         <Card.Text className="small">{product.title}</Card.Text>
         <div className="d-flex justify-content-between mt-auto">
           <Card.Text className={styles.style}>{product.price}</Card.Text>

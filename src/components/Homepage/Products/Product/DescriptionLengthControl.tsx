@@ -1,32 +1,30 @@
 //@ts-nocheck
-import styles from "./Product.module.scss";
-import { Button, Card } from "react-bootstrap";
-import Product from "./Product";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import classNames from "classnames";
+import { Button, Card } from "react-bootstrap";
 
-// description.slice(0, characterCounts)
-// description.lastIndexof(" ")? description.slice(0, characterCounts) :
+import styles from "./Product.module.scss";
 
-const DescriptionLengthControl = ({ product:{description} }) => {
-  const characterCounts = 50;
-  
+const characterLimits = 50;
+
+const DescriptionLengthControl = ({ product: { description } }) => {
   const [showMore, setShowMore] = useState(false);
   const toggleShowMore = () => setShowMore((shM) => !shM);
 
-  const shortenText = () => {
-    const shortenDescription = description.slice(0, characterCounts);
+  const shortenedDescription = useMemo(() => {
+    const shortenDescription = description.slice(0, characterLimits);
     const lastSpaceIndexof = shortenDescription.lastIndexOf(" ");
-    const text = shortenDescription.slice(0, lastSpaceIndexof);
-    return text;
-  };
+    let meaningfulDescription = shortenDescription.slice(0, lastSpaceIndexof);
+    meaningfulDescription += " ...";
+    return meaningfulDescription;
+  }, [description]);
 
   return (
     <>
       <Card.Text className={classNames(styles.cardDescription, "mb-0")}>
-        {!showMore ? shortenText() : description}
+        {!showMore ? shortenedDescription : description}
       </Card.Text>
-      {description.length > characterCounts && (
+      {description.length > characterLimits && (
         <Button
           variant="link"
           size="sm"
