@@ -24,9 +24,9 @@ const Filteredcategory = () => {
       <ul className={styles.listStyle}>
         <h5>CATEGORY</h5>
         {categoryItems.map((category) => (
-          <li>
+          <li key={category.id}>
             <input className="form-check-input mx-2" type="checkbox" value="" id={category.id}/>
-            <label className="form-check-label" for={category.id}>
+            <label className="form-check-label" htmlFor={category.id}>
               {category.name}
             </label>
           </li>

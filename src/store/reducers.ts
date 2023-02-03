@@ -1,4 +1,4 @@
-import Aside from "../components/Homepage/Aside/Aside";
+
 import isLoading from "./states/isLoading";
 import pageCount from "./states/pageCount";
 import products from "./states/products";
@@ -10,5 +10,4 @@ export default {
   search: search,
   isLoading: isLoading,
   pageCount: pageCount,
-  Aside: Aside,
 };
