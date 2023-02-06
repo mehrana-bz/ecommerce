@@ -19,6 +19,10 @@ const Filteredcategory = () => {
       });
   }, []);
 
+  const handleCategoryChange = ({target: {value}}) =>{
+    
+  }
+
   return (
     <div>
       <h5>CATEGORY</h5>
@@ -29,8 +33,9 @@ const Filteredcategory = () => {
               className="form-check-input mx-2"
               type="radio"
               name="flexRadioDefault"
-              value=""
+              value={category.id}
               id={category.id}
+              onChange={handleCategoryChange}
             />
             <label className="form-check-label" htmlFor={category.id}>
               {category.name}

@@ -4,7 +4,7 @@ import { RootState } from "..";
 import { setPageCount } from "./pageCount";
 import axios from "axios";
 import { setIsLoading } from "./isLoading";
-import { selectSearch } from "./search";
+import { selectSearch } from "./productFilters";
 //slices
 const slice = createSlice({
   name: "products",
@@ -26,7 +26,7 @@ export const selectProducts = (store: RootState) => store.products;
 
 //action
 //first axios to get all products
-const limit = 25;
+const limit = 21;
 export const getPageCount = () => (dispatch, getState) => {
   const state = getState();
 

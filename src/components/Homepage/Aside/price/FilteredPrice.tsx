@@ -23,7 +23,7 @@ const FilteredPrice = () => {
   const handlePriceFilter = (e) => {
     e.preventDefault();
 
-    console.log("salam");
+    
   };
 
   return (
