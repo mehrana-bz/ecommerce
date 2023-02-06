@@ -22,9 +22,15 @@ const FilteredPrice = () => {
 
   const handlePriceFilter = (e) => {
     e.preventDefault();
-
+    
     
   };
+  const handleMinPrice = ({target: {value}}) => {
+    dispatchEvent(setMinPrice(value));
+  }
+  const handleMaxPrice = ({target: {value}}) => {
+    dispatchEvent(setMaxPrice(value));
+  }
 
   return (
     <Form onSubmit={handlePriceFilter}>
@@ -38,6 +44,7 @@ const FilteredPrice = () => {
           max={maxPrice}
           placeholder={minPrice}
           className="w-25"
+          onChange={handleMinPrice}
         />
         <span>to</span>
         <Form.Control
@@ -47,6 +54,7 @@ const FilteredPrice = () => {
           max={maxPrice}
           placeholder={maxPrice}
           className="w-25"
+          onChange={handleMaxPrice}
         />
         <Button type="submit">
           <FontAwesomeIcon icon={faGreaterThan} />
