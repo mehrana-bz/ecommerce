@@ -25,14 +25,16 @@ const DescriptionLengthControl = ({ product: { description } }) => {
         {!showMore ? shortenedDescription : description}
       </Card.Text>
       {description.length > characterLimits && (
-        <Button
-          variant="link"
-          size="sm"
-          onClick={toggleShowMore}
-          className="d-flex flex-row px-0"
-        >
-          show {showMore ? "less" : "more"}
-        </Button>
+        <div>
+          <Button
+            variant="link"
+            size="sm"
+            onClick={toggleShowMore}
+            className="px-0"
+          >
+            show {showMore ? "less" : "more"}
+          </Button>
+        </div>
       )}
     </>
   );

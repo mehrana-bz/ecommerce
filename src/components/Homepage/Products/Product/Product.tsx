@@ -2,7 +2,7 @@
 import { Button, Card, ListGroup } from "react-bootstrap";
 import styles from "./Product.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faEuroSign } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import DescriptionLengthControl from "./DescriptionLengthControl";
@@ -15,12 +15,12 @@ const Product = ({ product }) => {
       <div className="ratio ratio-16x9">
         <Card.Img
           variant="top"
-          src={product.category.image}
+          src={product.images[0]}
           className={styles.pics}
         />
       </div>
       <Card.Body className="d-flex flex-column bg-light">
-        <Card.Title>{product.category.name}</Card.Title>
+        <Card.Title>{product.title}</Card.Title>
         <div className="rates">
           <FontAwesomeIcon
             icon={faStar}
@@ -44,9 +44,12 @@ const Product = ({ product }) => {
           />
         </div>
         <DescriptionLengthControl product={product} />
-        <Card.Text className="small">{product.title}</Card.Text>
-        <div className="d-flex justify-content-between mt-auto">
-          <Card.Text className={styles.style}>{product.price}</Card.Text>
+        <Card.Text className="small mt-auto">{product.category.name}</Card.Text>
+        <div className="d-flex justify-content-between">
+          <Card.Text className={styles.style}>
+          <FontAwesomeIcon icon={faEuroSign} className="me-1" />
+            {product.price}
+            </Card.Text>
           <Button variant="primary" className="px-4">
             <FontAwesomeIcon icon={faPlus} />
             <FontAwesomeIcon icon={faCartShopping} />

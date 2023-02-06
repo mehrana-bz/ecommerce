@@ -8,7 +8,7 @@ import {
   Form,
 } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { setSearch, selectSearch } from "../../store/states/search";
+import { setSearch, selectSearch } from "../../store/states/productFilters";
 import { selectIsLoading, setIsLoading } from "../../store/states/isLoading";
 import axios from "axios";
 import { getPageCount, getPaginatedProducts } from "../../store/states/products";
