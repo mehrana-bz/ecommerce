@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "..";
 import { setPageCount } from "./pageCount";
 import axios from "axios";
