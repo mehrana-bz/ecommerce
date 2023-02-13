@@ -1,26 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
 
-
-const slice = createSlice(
-    {
-        name: "isLoading",
-        initialState : true,
-        reducers : {
-            //actionNAme : reducer
-            setIsLoading : (_ , action) => {
-                return action.payload
-            }
-        }
-    }
-)
+const slice = createSlice({
+  name: "isLoading",
+  initialState: true,
+  reducers: {
+    //actionNAme : reducer
+    setIsLoading: (_, action: PayloadAction<boolean>) => {
+      return action.payload;
+    },
+  },
+});
 export default slice.reducer;
 
-
-export const  {setIsLoading} = slice.actions;
+export const { setIsLoading } = slice.actions;
 export const { name } = slice;
 
-
-//selectors 
+//selectors
 
 export const selectIsLoading = (state: RootState) => state.isLoading;
