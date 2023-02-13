@@ -4,7 +4,12 @@ import { RootState } from "..";
 import { setPageCount } from "./pageCount";
 import axios from "axios";
 import { setIsLoading } from "./isLoading";
-import { selectSearch } from "./productFilters";
+import {
+  selectCategoryId,
+  selectMaxPrice,
+  selectMinPrice,
+  selectSearch,
+} from "./productFilters";
 //slices
 const slice = createSlice({
   name: "products",
@@ -31,13 +36,19 @@ export const getPageCount = () => (dispatch, getState) => {
   const state = getState();
 
   const search = selectSearch(state);
+  const categoryId = selectCategoryId(state);
+  const minPrice = selectMinPrice(state);
+  const maxPrice = selectMaxPrice(state);
 
   return axios
-    .get(
-      `https://api.escuelajs.co/api/v1/products/${
-        search.length ? `?title=${search}` : ""
-      }`
-    )
+    .get("https://api.escuelajs.co/api/v1/products/", {
+      params: {
+        title: search,
+        categoryId,
+        price_min: minPrice,
+        price_max: maxPrice,
+      },
+    })
     .then((res) => res.data)
     .then((productsData) => {
       console.log(productsData);
@@ -47,14 +58,24 @@ export const getPageCount = () => (dispatch, getState) => {
 
 export const getPaginatedProducts = (currentPage) => (dispatch, getState) => {
   const state = getState();
+
   const search = selectSearch(state);
+  const categoryId = selectCategoryId(state);
+  const minPrice = selectMinPrice(state);
+  const maxPrice = selectMaxPrice(state);
+
   dispatch(setIsLoading(true));
   return axios
-    .get(
-      `https://api.escuelajs.co/api/v1/products?offset=${
-        (currentPage - 1) * limit
-      }&limit=${limit}${search.length ? `&title=${search}` : ""}`
-    )
+    .get("https://api.escuelajs.co/api/v1/products", {
+      params: {
+        offset: (currentPage - 1) * limit,
+        limit,
+        title: search,
+        categoryId,
+        price_min: minPrice,
+        price_max: maxPrice,
+      },
+    })
     .then((res) => res.data)
     .then((productsData) => {
       // setProducts(productsData);
