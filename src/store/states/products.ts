@@ -1,6 +1,5 @@
-//@ts-nocheck
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "..";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { AppThunk, RootState } from "..";
 import { setPageCount } from "./pageCount";
 import axios from "axios";
 import { setIsLoading } from "./isLoading";
@@ -10,13 +9,24 @@ import {
   selectMinPrice,
   selectSearch,
 } from "./productFilters";
+
+//TYPES
+type ProductsState = {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: number;
+  images: string[];
+}[];
+const initialState: ProductsState = [];
 //slices
 const slice = createSlice({
   name: "products",
-  initialState: [],
+  initialState,
   reducers: {
     // actionName: reducer
-    addProductsToStore: (_, action) => {
+    addProductsToStore: (_, action: PayloadAction<ProductsState>) => {
       return action.payload;
     },
   },
@@ -26,13 +36,12 @@ export const { addProductsToStore } = slice.actions;
 export default slice.reducer;
 
 //selectors
-export const selectProducts = (store: RootState) => store.products;
-// export const selectIsLoading = (store: RootState) => store.isLoading;
+export const selectProducts = (state: RootState) => state.products;
 
 //action
 //first axios to get all products
 const limit = 21;
-export const getPageCount = () => (dispatch, getState) => {
+export const getPageCount = ():AppThunk => (dispatch, getState) => {
   const state = getState();
 
   const search = selectSearch(state);
@@ -41,7 +50,7 @@ export const getPageCount = () => (dispatch, getState) => {
   const maxPrice = selectMaxPrice(state);
 
   return axios
-    .get("https://api.escuelajs.co/api/v1/products/", {
+    .get<ProductsState>("https://api.escuelajs.co/api/v1/products/", {
       params: {
         title: search,
         categoryId,
@@ -51,12 +60,11 @@ export const getPageCount = () => (dispatch, getState) => {
     })
     .then((res) => res.data)
     .then((productsData) => {
-      console.log(productsData);
       dispatch(setPageCount(Math.ceil(productsData.length / limit)));
     });
 };
 
-export const getPaginatedProducts = (currentPage) => (dispatch, getState) => {
+export const getPaginatedProducts = (currentPage:number): AppThunk => (dispatch, getState) => {
   const state = getState();
 
   const search = selectSearch(state);
@@ -66,7 +74,7 @@ export const getPaginatedProducts = (currentPage) => (dispatch, getState) => {
 
   dispatch(setIsLoading(true));
   return axios
-    .get("https://api.escuelajs.co/api/v1/products", {
+    .get<ProductsState>("https://api.escuelajs.co/api/v1/products", {
       params: {
         offset: (currentPage - 1) * limit,
         limit,
@@ -78,7 +86,6 @@ export const getPaginatedProducts = (currentPage) => (dispatch, getState) => {
     })
     .then((res) => res.data)
     .then((productsData) => {
-      // setProducts(productsData);
       dispatch(addProductsToStore(productsData));
     })
     .finally(() => {
