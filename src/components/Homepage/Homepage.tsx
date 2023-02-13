@@ -1,8 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
+
 import Aside from "./Aside/Aside";
 import Products from "./Products/Products";
-
-
 
 const Homepage = () => {
   return (
