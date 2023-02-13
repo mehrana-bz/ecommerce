@@ -4,7 +4,12 @@ import { RootState } from "..";
 import { setPageCount } from "./pageCount";
 import axios from "axios";
 import { setIsLoading } from "./isLoading";
-import { selectCategoryId, selectSearch } from "./productFilters";
+import {
+  selectCategoryId,
+  selectMaxPrice,
+  selectMinPrice,
+  selectSearch,
+} from "./productFilters";
 //slices
 const slice = createSlice({
   name: "products",
@@ -32,16 +37,21 @@ export const getPageCount = () => (dispatch, getState) => {
 
   const search = selectSearch(state);
   const categoryId = selectCategoryId(state);
+  const minPrice = selectMinPrice(state);
+  const maxPrice = selectMaxPrice(state);
 
   return axios
     .get("https://api.escuelajs.co/api/v1/products/", {
       params: {
         title: search,
         categoryId,
+        price_min: minPrice,
+        price_max: maxPrice,
       },
     })
     .then((res) => res.data)
     .then((productsData) => {
+      console.log(productsData);
       dispatch(setPageCount(Math.ceil(productsData.length / limit)));
     });
 };
@@ -51,6 +61,8 @@ export const getPaginatedProducts = (currentPage) => (dispatch, getState) => {
 
   const search = selectSearch(state);
   const categoryId = selectCategoryId(state);
+  const minPrice = selectMinPrice(state);
+  const maxPrice = selectMaxPrice(state);
 
   dispatch(setIsLoading(true));
   return axios
@@ -60,6 +72,8 @@ export const getPaginatedProducts = (currentPage) => (dispatch, getState) => {
         limit,
         title: search,
         categoryId,
+        price_min: minPrice,
+        price_max: maxPrice,
       },
     })
     .then((res) => res.data)

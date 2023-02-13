@@ -2,8 +2,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styles from "./CategoriesFilter.module.scss";
-import { useDispatch } from "react-redux";
-import { setCategoryId } from "../../../../store/states/productFilters";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCategoryId,
+  setCategoryId,
+} from "../../../../store/states/productFilters";
 import {
   getPageCount,
   getPaginatedProducts,
@@ -16,6 +19,8 @@ const CategoriesFilter = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const categoryId = useSelector(selectCategoryId);
 
   useEffect(() => {
     axios
@@ -34,7 +39,7 @@ const CategoriesFilter = () => {
 
   const handleCategoryChange = ({ target: { value } }) => {
     navigate(generatePath(Routes.Homepage));
-    dispatch(setCategoryId(value));
+    dispatch(setCategoryId(!value ? value : parseInt(value)));
     dispatch(getPageCount());
     dispatch(getPaginatedProducts(1));
   };
@@ -51,6 +56,7 @@ const CategoriesFilter = () => {
             value={undefined}
             id="all"
             onChange={handleCategoryChange}
+            checked={!categoryId}
           />
           <label className="form-check-label" htmlFor="all">
             All
@@ -65,6 +71,7 @@ const CategoriesFilter = () => {
               value={category.id}
               id={category.id}
               onChange={handleCategoryChange}
+              checked={categoryId === category.id}
             />
             <label className="form-check-label" htmlFor={category.id}>
               {category.name}
