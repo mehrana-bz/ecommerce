@@ -1,10 +1,9 @@
-//@ts-nocheck
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.scss";
 import Layout from "./Layout/Layout";
 import Homepage from "./Homepage/Homepage";
 import Routes from "../Routes/Routes";
-import Product from "./Homepage/Products/Product/Product";
+
 
 const router = createBrowserRouter([
   {

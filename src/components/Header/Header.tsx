@@ -1,4 +1,4 @@
-//@ts-nocheck
+import { generatePath, useNavigate } from "react-router-dom";
 import {
   Button,
   Container,
@@ -7,33 +7,29 @@ import {
   Navbar,
   Form,
 } from "react-bootstrap";
+
+import {
+  getPageCount,
+  getPaginatedProducts,
+} from "../../store/states/products";
+import Routes from "../../Routes/Routes";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSearch, selectSearch } from "../../store/states/productFilters";
-import { selectIsLoading, setIsLoading } from "../../store/states/isLoading";
-import axios from "axios";
-import { getPageCount, getPaginatedProducts } from "../../store/states/products";
-import { generatePath, useNavigate } from "react-router-dom";
-import Routes from "../../Routes/Routes";
+import { ChangeEvent, FormEvent } from "react";
 
 const Header = () => {
-
-  //dispatch
   const dispatch = useAppDispatch();
-  //useNavigate
   const navigate = useNavigate();
-  //useSelector
   const search = useAppSelector(selectSearch);
-  const isLoading = useAppSelector(selectIsLoading);
 
-  const handleSearchValue = ({ target: { value } }) => {
+  const handleSearchValueInput = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearch(value));
   };
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate(generatePath(Routes.Homepage));
-    // show loading again
-    // remaining posts
-    //load posts
     dispatch(getPageCount());
     dispatch(getPaginatedProducts(1));
   };
@@ -99,10 +95,12 @@ const Header = () => {
               placeholder="Search"
               className="me-2"
               aria-label="Search"
-              onInput={handleSearchValue}
+              onInput={handleSearchValueInput}
               value={search}
             />
-            <Button variant="outline-success" type="submit">Search</Button>
+            <Button variant="outline-success" type="submit">
+              Search
+            </Button>
           </Form>
         </Container>
       </Navbar>

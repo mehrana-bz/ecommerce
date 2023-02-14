@@ -1,20 +1,17 @@
-//@ts-nocheck
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { Col, Row, Spinner } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
-  addProductsToStore,
   getPageCount,
   getPaginatedProducts,
   selectProducts,
 } from "../../../store/states/products";
-import { Col, Container, Row, Spinner } from "react-bootstrap";
-import Product from "./Product/Product";
+import { selectIsLoading } from "../../../store/states/isLoading";
 import PaginationPart from "./pagination/PaginationPart";
-import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { selectIsLoading, setIsLoading } from "../../../store/states/isLoading";
-import { selectPageCount, setPageCount } from "../../../store/states/pageCount";
+import { selectPageCount } from "../../../store/states/pageCount";
+import Product from "./Product/Product";
 
 
 
@@ -34,7 +31,7 @@ const Products = () => {
   // const [pageCount, setPageCount] = useState(0);
 
   //get routes parts in url with useParams
-  const { number: pageNumber = 1 } = useParams();
+  const { number: pageNumber = "1" } = useParams();
   const currentPage = parseInt(pageNumber);
 
   useEffect(() => {

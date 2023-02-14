@@ -1,13 +1,18 @@
-//@ts-nocheck
 import { useState, useMemo } from "react";
 import classNames from "classnames";
 import { Button, Card } from "react-bootstrap";
 
 import styles from "./Product.module.scss";
+import { Product as ProductType} from "../../../../store/states/products";
 
 const characterLimits = 50;
+interface DescriptionLengthControlProps {
+  product: {
+    description: ProductType["description"];
+  }
+}
 
-const DescriptionLengthControl = ({ product: { description } }) => {
+const DescriptionLengthControl = ({ product: { description } }: DescriptionLengthControlProps ) => {
   const [showMore, setShowMore] = useState(false);
   const toggleShowMore = () => setShowMore((shM) => !shM);
 

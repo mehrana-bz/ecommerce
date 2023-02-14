@@ -1,13 +1,18 @@
-//@ts-nocheck
-import { Button, Card, ListGroup } from "react-bootstrap";
-import styles from "./Product.module.scss";
+import { Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faEuroSign } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import DescriptionLengthControl from "./DescriptionLengthControl";
 
-const Product = ({ product }) => {
+import DescriptionLengthControl from "./DescriptionLengthControl";
+import styles from "./Product.module.scss";
+import { Product as ProductType } from "../../../../store/states/products";
+
+interface ProductProps {
+  product: ProductType;
+}
+
+const Product = ({ product }: ProductProps) => {
   const markedStarsCount = Math.floor(Math.random() * 5);
 
   return (
@@ -47,9 +52,9 @@ const Product = ({ product }) => {
         <Card.Text className="small mt-auto">{product.category.name}</Card.Text>
         <div className="d-flex justify-content-between">
           <Card.Text className={styles.style}>
-          <FontAwesomeIcon icon={faEuroSign} className="me-1" />
+            <FontAwesomeIcon icon={faEuroSign} className="me-1" />
             {product.price}
-            </Card.Text>
+          </Card.Text>
           <Button variant="primary" className="px-4">
             <FontAwesomeIcon icon={faPlus} />
             <FontAwesomeIcon icon={faCartShopping} />

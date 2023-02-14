@@ -1,12 +1,11 @@
-//@ts-nocheck
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
 
 const slice = createSlice({
     name : "pageCount",
     initialState: 0,
     reducers : {
-        setPageCount : (_ , action) => {
+        setPageCount : (_ , action:PayloadAction<number>) => {
             return action.payload
         }
     }
