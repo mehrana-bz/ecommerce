@@ -23,7 +23,7 @@ export type Product = {
   };
   images: string[];
 };
-type ProductsState = Product[];
+export type ProductsState = Product[];
 const initialState: ProductsState = [];
 //slices
 const slice = createSlice({
