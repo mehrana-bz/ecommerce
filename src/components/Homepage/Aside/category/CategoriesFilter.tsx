@@ -1,8 +1,8 @@
-//@ts-nocheck
 import axios from "axios";
-import { useEffect, useState } from "react";
-import styles from "./CategoriesFilter.module.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState,ChangeEvent } from "react";
+import { useSelector } from "react-redux";
+import { generatePath, useNavigate } from "react-router-dom";
+
 import {
   selectCategoryId,
   setCategoryId,
@@ -11,20 +11,21 @@ import {
   getPageCount,
   getPaginatedProducts,
 } from "../../../../store/states/products";
-import { generatePath, useNavigate } from "react-router-dom";
 import Routes from "../../../../Routes/Routes";
-
+import styles from "./CategoriesFilter.module.scss";
+import { useAppDispatch } from "../../../../store/hooks";
+import {Product} from "../../../../store/states/products"
 const CategoriesFilter = () => {
-  const [categoryItems, setCategories] = useState([]);
+  const [categoryItems, setCategories] = useState<Product['category'][]>([]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const categoryId = useSelector(selectCategoryId);
 
   useEffect(() => {
     axios
-      .get(" https://api.escuelajs.co/api/v1/categories")
+      .get<Product['category'][]>(" https://api.escuelajs.co/api/v1/categories")
       .then((res) => res.data)
       .then((categories) => {
         setCategories(
@@ -37,9 +38,9 @@ const CategoriesFilter = () => {
       });
   }, []);
 
-  const handleCategoryChange = ({ target: { value } }) => {
+  const handleCategoryChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     navigate(generatePath(Routes.Homepage));
-    dispatch(setCategoryId(!value ? value : parseInt(value)));
+    dispatch(setCategoryId(!value ? undefined : parseInt(value)));
     dispatch(getPageCount());
     dispatch(getPaginatedProducts(1));
   };
@@ -69,11 +70,11 @@ const CategoriesFilter = () => {
               type="radio"
               name="category"
               value={category.id}
-              id={category.id}
+              id={`category_${category.id}`}
               onChange={handleCategoryChange}
               checked={categoryId === category.id}
             />
-            <label className="form-check-label" htmlFor={category.id}>
+            <label className="form-check-label" htmlFor={`category_${category.id}`}>
               {category.name}
             </label>
           </li>
