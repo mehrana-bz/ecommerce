@@ -1,0 +1,5 @@
+@import "../../../styles/variables";
+
+#Aside {
+  top: calc(1rem + $header-height);
+}

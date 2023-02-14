@@ -1,10 +1,7 @@
 import { generatePath, useNavigate } from "react-router-dom";
-import { MouseEvent, ReactElement } from "react";
-import classNames from "classnames";
+import ReactPaginate, { ReactPaginateProps } from "react-paginate";
 
-import styles from "./Pagination.module.scss";
 import Routes from "../../../../Routes/Routes";
-import Pagination from "react-bootstrap/Pagination";
 
 {
   /* <NavLink to={generatePath(Routes.Page, { number: page })}>
@@ -22,37 +19,38 @@ const PaginationPart = ({
 }: PaginationPartProps) => {
   const navigate = useNavigate();
 
-  const handleChangePage =
-    (href: string) =>
-    (e: MouseEvent<HTMLLinkElement>): void => {
-      e.preventDefault();
-      navigate(href);
-    };
-
-  const pages: ReactElement[] = [];
-  for (let page = 1; page <= pageCount; page++) {
+  const handleChangePage: ReactPaginateProps["onPageChange"] = (selectedPage) => {
+    const page = selectedPage.selected + 1;
     const href = generatePath(Routes.Page, { number: page.toString() });
-    pages.push(
-      <Pagination.Item
-        key={page}
-        className={styles.borderColor}
-        href={href}
-        onClick={handleChangePage(href)}
-        active={currentPage === page}
-      >
-        {page}
-      </Pagination.Item>
-    );
-  }
+    navigate(href);
+  };
+
+  const hrefBuilder: ReactPaginateProps["hrefBuilder"] = (pageIndex) => {
+    return generatePath(Routes.Page, { number: pageIndex.toString() });
+  };
 
   return (
-    <Pagination className="sticky-bottom">
-      {pages}
-      <Pagination.Next className={styles.borderColor} />
-      <Pagination.Last
-        className={classNames("rounded-end", styles.borderColor)}
-      />
-    </Pagination>
+    <ReactPaginate
+      initialPage={currentPage - 1}
+      nextLabel="next >"
+      onPageChange={handleChangePage}
+      pageRangeDisplayed={3}
+      marginPagesDisplayed={2}
+      pageCount={pageCount}
+      previousLabel="< previous"
+      pageClassName="page-item"
+      pageLinkClassName="page-link"
+      previousClassName="page-item"
+      previousLinkClassName="page-link"
+      nextClassName="page-item"
+      nextLinkClassName="page-link"
+      breakLabel="..."
+      breakClassName="page-item"
+      breakLinkClassName="page-link"
+      containerClassName="pagination sticky-bottom"
+      activeClassName="active"
+      hrefBuilder={hrefBuilder}
+    />
   );
 };
 
