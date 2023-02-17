@@ -7,6 +7,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import DescriptionLengthControl from "./DescriptionLengthControl";
 import styles from "./Product.module.scss";
 import { Product as ProductType } from "../../../../store/states/products";
+import { Link, generatePath } from "react-router-dom";
+import Routes from "../../../../Routes/Routes";
 
 interface ProductProps {
   product: ProductType;
@@ -18,11 +20,13 @@ const Product = ({ product }: ProductProps) => {
   return (
     <Card className="h-100">
       <div className="ratio ratio-16x9">
-        <Card.Img
-          variant="top"
-          src={product.images[0]}
-          className={styles.pics}
-        />
+        <Link to={generatePath(Routes.Product, {id: product.id.toString()})}>
+          <Card.Img
+            variant="top"
+            src={product.images[0]}
+            className={styles.pics}
+          />
+        </Link>
       </div>
       <Card.Body className="d-flex flex-column bg-light">
         <Card.Title>{product.title}</Card.Title>

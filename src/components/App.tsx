@@ -3,6 +3,7 @@ import "./App.scss";
 import Layout from "./Layout/Layout";
 import Homepage from "./Homepage/Homepage";
 import Routes from "../Routes/Routes";
+import ProductPage from "./ProductPage/ProductPage";
 
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
         ]
 
       },
+      {
+        path:Routes.Product,
+        element: <ProductPage />
+      }
     ]
   }
 ])

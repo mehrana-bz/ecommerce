@@ -51,9 +51,9 @@ const Products = () => {
       )}
       {!isLoading && products.length !== 0 && (
         <>
-          <Row>
+          <Row xs={1} md={3} className="g-4">
             {products.map((product) => (
-              <Col key={product.id} sm={4} className="mb-3">
+              <Col key={product.id}>
                 <Product product={product} />
               </Col>
             ))}
