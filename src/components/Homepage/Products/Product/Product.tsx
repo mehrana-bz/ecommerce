@@ -19,15 +19,15 @@ const Product = ({ product }: ProductProps) => {
 
   return (
     <Card className="h-100">
-      <div className="ratio ratio-16x9">
-        <Link to={generatePath(Routes.Product, {id: product.id.toString()})}>
+      <Link to={generatePath(Routes.Product, { id: product.id.toString() })}>
+        <div className="ratio ratio-16x9">
           <Card.Img
             variant="top"
             src={product.images[0]}
             className={styles.pics}
           />
-        </Link>
-      </div>
+        </div>
+      </Link>
       <Card.Body className="d-flex flex-column bg-light">
         <Card.Title>{product.title}</Card.Title>
         <div className="rates">
