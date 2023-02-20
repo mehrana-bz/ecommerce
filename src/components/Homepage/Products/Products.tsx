@@ -12,8 +12,7 @@ import { selectIsLoading } from "../../../store/states/isLoading";
 import PaginationPart from "./pagination/PaginationPart";
 import { selectPageCount } from "../../../store/states/pageCount";
 import Product from "./Product/Product";
-
-
+import classNames from "classnames";
 
 const Products = () => {
   // const [products , setProducts] = useState([]);
@@ -35,7 +34,7 @@ const Products = () => {
   const currentPage = parseInt(pageNumber);
 
   useEffect(() => {
-     dispatch(getPageCount());
+    dispatch(getPageCount());
   }, []);
 
   useEffect(() => {
@@ -51,14 +50,18 @@ const Products = () => {
       )}
       {!isLoading && products.length !== 0 && (
         <>
-          <Row>
+          <Row xs={1} md={3} className="g-4">
             {products.map((product) => (
-              <Col key={product.id} sm={4} className="mb-3">
+              <Col key={product.id}>
                 <Product product={product} />
               </Col>
             ))}
           </Row>
-          <PaginationPart pageCount={pageCount} currentPage={currentPage} />
+          <PaginationPart
+            pageCount={pageCount}
+            currentPage={currentPage}
+            className={classNames("mt-3", "bg-white", "sticky-bottom", "py-2")}
+          />
         </>
       )}
       {!isLoading && products.length === 0 && <div>😥 No Result found!!!</div>}

@@ -1,5 +1,6 @@
 const Routes = {
   Homepage: "/",
   Page: "/page/:number",
-} as const;
+  Product: "/product/:id"
+ } as const;
 export default Routes;
