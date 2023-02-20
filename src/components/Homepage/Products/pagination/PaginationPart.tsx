@@ -2,6 +2,7 @@ import { generatePath, useNavigate } from "react-router-dom";
 import ReactPaginate, { ReactPaginateProps } from "react-paginate";
 
 import Routes from "../../../../Routes/Routes";
+import classNames from "classnames";
 
 {
   /* <NavLink to={generatePath(Routes.Page, { number: page })}>
@@ -11,15 +12,19 @@ import Routes from "../../../../Routes/Routes";
 interface PaginationPartProps {
   pageCount: number;
   currentPage?: number;
+  className?: string;
 }
 
 const PaginationPart = ({
   pageCount,
   currentPage = 1,
+  className,
 }: PaginationPartProps) => {
   const navigate = useNavigate();
 
-  const handleChangePage: ReactPaginateProps["onPageChange"] = (selectedPage) => {
+  const handleChangePage: ReactPaginateProps["onPageChange"] = (
+    selectedPage
+  ) => {
     const page = selectedPage.selected + 1;
     const href = generatePath(Routes.Page, { number: page.toString() });
     navigate(href);
@@ -47,7 +52,7 @@ const PaginationPart = ({
       breakLabel="..."
       breakClassName="page-item"
       breakLinkClassName="page-link"
-      containerClassName="pagination sticky-bottom"
+      containerClassName={classNames("pagination", className)}
       activeClassName="active"
       hrefBuilder={hrefBuilder}
     />

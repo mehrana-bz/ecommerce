@@ -12,8 +12,7 @@ import { selectIsLoading } from "../../../store/states/isLoading";
 import PaginationPart from "./pagination/PaginationPart";
 import { selectPageCount } from "../../../store/states/pageCount";
 import Product from "./Product/Product";
-
-
+import classNames from "classnames";
 
 const Products = () => {
   // const [products , setProducts] = useState([]);
@@ -35,7 +34,7 @@ const Products = () => {
   const currentPage = parseInt(pageNumber);
 
   useEffect(() => {
-     dispatch(getPageCount());
+    dispatch(getPageCount());
   }, []);
 
   useEffect(() => {
@@ -58,7 +57,11 @@ const Products = () => {
               </Col>
             ))}
           </Row>
-          <PaginationPart pageCount={pageCount} currentPage={currentPage} />
+          <PaginationPart
+            pageCount={pageCount}
+            currentPage={currentPage}
+            className={classNames("mt-3", "bg-white", "sticky-bottom", "py-2")}
+          />
         </>
       )}
       {!isLoading && products.length === 0 && <div>😥 No Result found!!!</div>}

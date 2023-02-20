@@ -1,22 +1,21 @@
-import { Button, Card } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faEuroSign } from "@fortawesome/free-solid-svg-icons";
+import { Badge, Button, Card } from "react-bootstrap";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faEuroSign } from "@fortawesome/free-solid-svg-icons";
 
 import DescriptionLengthControl from "./DescriptionLengthControl";
 import styles from "./Product.module.scss";
 import { Product as ProductType } from "../../../../store/states/products";
 import { Link, generatePath } from "react-router-dom";
 import Routes from "../../../../Routes/Routes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Rates from "../../../icons/Rates";
 
 interface ProductProps {
   product: ProductType;
 }
 
 const Product = ({ product }: ProductProps) => {
-  const markedStarsCount = Math.floor(Math.random() * 5);
-
   return (
     <Card className="h-100">
       <Link to={generatePath(Routes.Product, { id: product.id.toString() })}>
@@ -30,32 +29,15 @@ const Product = ({ product }: ProductProps) => {
       </Link>
       <Card.Body className="d-flex flex-column bg-light">
         <Card.Title>{product.title}</Card.Title>
-        <div className="rates">
-          <FontAwesomeIcon
-            icon={faStar}
-            color={markedStarsCount >= 1 ? "yellow" : "gray"}
-          />
-          <FontAwesomeIcon
-            icon={faStar}
-            color={markedStarsCount >= 2 ? "yellow" : "gray"}
-          />
-          <FontAwesomeIcon
-            icon={faStar}
-            color={markedStarsCount >= 3 ? "yellow" : "gray"}
-          />
-          <FontAwesomeIcon
-            icon={faStar}
-            color={markedStarsCount >= 4 ? "yellow" : "gray"}
-          />
-          <FontAwesomeIcon
-            icon={faStar}
-            color={markedStarsCount === 5 ? "yellow" : "gray"}
-          />
-        </div>
+        <Rates />
         <DescriptionLengthControl product={product} />
-        <Card.Text className="small mt-auto">{product.category.name}</Card.Text>
-        <div className="d-flex justify-content-between">
-          <Card.Text className={styles.style}>
+        <Card.Text className="mt-auto">
+          <Badge bg="secondary">
+            {product.category.name}
+          </Badge>
+        </Card.Text>
+        <div className="d-flex justify-content-between align-items-center">
+          <Card.Text as="span">
             <FontAwesomeIcon icon={faEuroSign} className="me-1" />
             {product.price}
           </Card.Text>
