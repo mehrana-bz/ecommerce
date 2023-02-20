@@ -12,23 +12,25 @@ interface ProductProps {
 const ProductInfo = ({ product }: ProductProps) => {
   return (
     <>
-      <Row>
+      <div className="mt-5">
+        <h2>{product.title}</h2>
+        <Rates />
+      </div>
+      <Row className="mt-3">
         <Col sm={7}>
-          <h2>{product.title}</h2>
-          <Rates className="mb-3"/>
           <Carousel>
-              {product.images.map((address, index) => (
-                <Carousel.Item key={index} className="ratio ratio-16x9">
-                  <img
-                    className={classNames("d-block", "w-100", styles.pics)}
-                    src={address}
-                  />
-                </Carousel.Item>
-              ))}
-            </Carousel>
+            {product.images.map((address, index) => (
+              <Carousel.Item key={index} className="ratio ratio-16x9">
+                <img
+                  className={classNames("d-block", "w-100", styles.pics)}
+                  src={address}
+                />
+              </Carousel.Item>
+            ))}
+          </Carousel>
         </Col>
         <Col sm={5}>
-          <ProductShoppingInfo />
+          <ProductShoppingInfo product={product}/>
         </Col>
       </Row>
     </>
