@@ -13,6 +13,8 @@ import { ChangeEvent, FormEvent } from "react";
 import LogoIcon from "../icons/LogoIcon";
 import styles from "./Header.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { selectBookmarks } from "../../store/states/bookmarks";
+
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -30,6 +32,8 @@ const Header = () => {
     dispatch(getPageCount());
     dispatch(getPaginatedProducts(1));
   };
+
+  const bookmarksState = useAppSelector(selectBookmarks);
 
   return (
     <header id={styles.Header}>
@@ -53,7 +57,14 @@ const Header = () => {
                 Search
               </Button>
             </Form>
-            <FontAwesomeIcon icon={faHeart} />
+            <div className="position-relative">
+              <FontAwesomeIcon icon={faHeart} className="fs-4" />
+              {bookmarksState.length !== 0 && (
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  {bookmarksState.length}
+                </span>
+              )}
+            </div>
           </div>
         </Container>
       </Navbar>
