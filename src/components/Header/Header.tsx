@@ -1,10 +1,6 @@
 import { Link, generatePath, useNavigate } from "react-router-dom";
-import {
-  Button,
-  Container,
-   Navbar,
-  Form,
-} from "react-bootstrap";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { Button, Container, Navbar, Form } from "react-bootstrap";
 
 import {
   getPageCount,
@@ -15,7 +11,9 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSearch, selectSearch } from "../../store/states/productFilters";
 import { ChangeEvent, FormEvent } from "react";
 import LogoIcon from "../icons/LogoIcon";
-import styles from "./Header.module.scss"
+import styles from "./Header.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { selectBookmarks } from "../../store/states/bookmarks";
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -34,27 +32,41 @@ const Header = () => {
     dispatch(getPaginatedProducts(1));
   };
 
+  const bookmarksState = useAppSelector(selectBookmarks);
+
   return (
     <header id={styles.Header}>
       <Navbar bg="light" variant="light" fixed="top" className="">
         <Container>
           <Navbar.Brand as={Link} to={Routes.Homepage}>
-            <LogoIcon/>
+            <LogoIcon />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-dark-example" />
-          <Form onSubmit={handleSearchSubmit} className="d-flex w-50">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-              onInput={handleSearchValueInput}
-              value={search}
-            />
-            <Button variant="outline-primary" type="submit">
-              Search
-            </Button>
-          </Form>
+          <div className="d-flex align-items-center w-100 justify-content-end gap-3">
+            <Form onSubmit={handleSearchSubmit} className="d-flex w-50">
+              <Form.Control
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+                onInput={handleSearchValueInput}
+                value={search}
+              />
+              <Button variant="outline-primary" type="submit">
+                Search
+              </Button>
+            </Form>
+            <Link to={Routes.Bookmarks}>
+              <div className="position-relative">
+                <FontAwesomeIcon icon={faHeart} className="fs-4" />
+                {bookmarksState.length !== 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {bookmarksState.length}
+                  </span>
+                )}
+              </div>
+            </Link>
+          </div>
         </Container>
       </Navbar>
     </header>

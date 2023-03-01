@@ -1,13 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
+import {useRef} from "react";
 
 interface RatesProps {
   className?: string;
 }
 
 const Rates = ({ className }: RatesProps) => {
-  const markedStarsCount = Math.floor(Math.random() * 5);
+  const {current: markedStarsCount} = useRef(Math.floor(Math.random() * 5));
+
   return (
     <div className={classNames("rates", className)}>
       <FontAwesomeIcon

@@ -3,6 +3,7 @@ import isLoading from "./states/isLoading";
 import pageCount from "./states/pageCount";
 import products from "./states/products";
 import productFilters from "./states/productFilters";
+import bookmarks from "./states/bookmarks";
 
 export default {
   //stateName : Reducer Function
@@ -10,4 +11,5 @@ export default {
   productFilters: productFilters,
   isLoading: isLoading,
   pageCount: pageCount,
+  bookmarks: bookmarks,
 };
