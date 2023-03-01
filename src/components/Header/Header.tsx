@@ -15,7 +15,6 @@ import styles from "./Header.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { selectBookmarks } from "../../store/states/bookmarks";
 
-
 const Header = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -57,14 +56,16 @@ const Header = () => {
                 Search
               </Button>
             </Form>
-            <div className="position-relative">
-              <FontAwesomeIcon icon={faHeart} className="fs-4" />
-              {bookmarksState.length !== 0 && (
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {bookmarksState.length}
-                </span>
-              )}
-            </div>
+            <Link to={Routes.Bookmarks}>
+              <div className="position-relative">
+                <FontAwesomeIcon icon={faHeart} className="fs-4" />
+                {bookmarksState.length !== 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {bookmarksState.length}
+                  </span>
+                )}
+              </div>
+            </Link>
           </div>
         </Container>
       </Navbar>

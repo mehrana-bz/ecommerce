@@ -4,6 +4,8 @@ import { RootState } from "..";
 
 type Bookmark = Product['id'];
 type BookmarksState = Bookmark[];
+
+
 const initialState: BookmarksState = [];
 
 const slice = createSlice({

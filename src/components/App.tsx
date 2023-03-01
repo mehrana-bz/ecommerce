@@ -4,6 +4,7 @@ import Layout from "./Layout/Layout";
 import Homepage from "./Homepage/Homepage";
 import Routes from "../Routes/Routes";
 import ProductPage from "./ProductPage/ProductPage";
+import BookmarksPage from "./BookmarksPage/BookmarksPage";
 
 
 const router = createBrowserRouter([
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path:Routes.Product,
         element: <ProductPage />
+      },
+      {
+        path: Routes.Bookmarks,
+        element: <BookmarksPage/>
       }
     ]
   }
