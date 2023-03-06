@@ -47,7 +47,7 @@ const ShoppingCart = () => {
           setIsLoading(false);
         });
     });
-  }, [shoppingCartsState.length]);
+  }, [shoppingCartsState, shoppingCartsState.length]);
 
   return (
     <Container>

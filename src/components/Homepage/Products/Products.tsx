@@ -35,11 +35,11 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(getPageCount());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getPaginatedProducts(currentPage));
-  }, [currentPage]);
+  }, [dispatch, currentPage]);
 
   return (
     <>

@@ -24,6 +24,7 @@ const ProductInfo = ({ product }: ProductProps) => {
                 <img
                   className={classNames("d-block", "w-100", styles.pics)}
                   src={address}
+                  alt={product.title}
                 />
               </Carousel.Item>
             ))}

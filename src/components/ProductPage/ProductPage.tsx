@@ -19,7 +19,7 @@ const ProductPage = () => {
         setProduct(fetchedProduct);
       })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [id]);
 
   return (
     <>

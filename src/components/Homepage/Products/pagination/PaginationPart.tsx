@@ -4,11 +4,6 @@ import ReactPaginate, { ReactPaginateProps } from "react-paginate";
 import Routes from "../../../../Routes/Routes";
 import classNames from "classnames";
 
-{
-  /* <NavLink to={generatePath(Routes.Page, { number: page })}>
-{page}
-</NavLink> */
-}
 interface PaginationPartProps {
   pageCount: number;
   currentPage?: number;

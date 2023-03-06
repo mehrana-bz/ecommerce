@@ -7,7 +7,7 @@ import bookmarks from "./states/bookmarks";
 import shoppingCart from "./states/shoppingCart";
 
 
-export default {
+const reducers = {
   //stateName : Reducer Function
   products: products,
   productFilters: productFilters,
@@ -16,3 +16,5 @@ export default {
   bookmarks: bookmarks,
   shoppingCart: shoppingCart,
 };
+
+export default reducers;
