@@ -1,6 +1,10 @@
 import { Link, generatePath, useNavigate } from "react-router-dom";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { Button, Container, Navbar, Form } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ChangeEvent, FormEvent } from "react";
+import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
+import { useMemo } from "react";
 
 import {
   getPageCount,
@@ -9,15 +13,16 @@ import {
 import Routes from "../../Routes/Routes";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setSearch, selectSearch } from "../../store/states/productFilters";
-import { ChangeEvent, FormEvent } from "react";
 import LogoIcon from "../icons/LogoIcon";
 import styles from "./Header.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { selectBookmarks } from "../../store/states/bookmarks";
+import { selectShoppingCart } from "../../store/states/shoppingCart";
 
 const Header = () => {
   const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
+
   const search = useAppSelector(selectSearch);
 
   const handleSearchValueInput = ({
@@ -33,6 +38,11 @@ const Header = () => {
   };
 
   const bookmarksState = useAppSelector(selectBookmarks);
+  const shoppingCartState = useAppSelector(selectShoppingCart);
+
+  const shoppingCartsSum = useMemo(() => {
+    return shoppingCartState.reduce((sum , cart) => sum + cart.count, 0)
+  },[shoppingCartState]);
 
   return (
     <header id={styles.Header}>
@@ -62,6 +72,20 @@ const Header = () => {
                 {bookmarksState.length !== 0 && (
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {bookmarksState.length}
+                  </span>
+                )}
+              </div>
+            </Link>
+            <Link to={Routes.ShoppingCart}>
+              <div className="position-relative">
+                <FontAwesomeIcon
+                  icon={faBasketShopping}
+                  className="fs-5 text-primary"
+                  role="button"
+                />
+                {shoppingCartState.length !== 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {shoppingCartsSum}
                   </span>
                 )}
               </div>

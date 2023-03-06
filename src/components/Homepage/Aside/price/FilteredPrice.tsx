@@ -17,8 +17,6 @@ import {
   setMinPrice,
 } from "../../../../store/states/productFilters";
 
-
-
 const FilteredPrice = () => {
   const [defaultMinPrice, setDefaultMinPrice] = useState<number>(0);
   const [defaultMaxPrice, setDefaultMaxPrice] = useState<number>(0);
@@ -36,16 +34,20 @@ const FilteredPrice = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handlePriceFilter = (e:FormEvent<HTMLFormElement>) => {
+  const handlePriceFilter = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate(generatePath(Routes.Homepage));
     dispatch(getPageCount());
     dispatch(getPaginatedProducts(1));
   };
-  const handleMinPrice = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const handleMinPrice = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
     dispatch(setMinPrice(parseInt(value)));
   };
-  const handleMaxPrice = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const handleMaxPrice = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
     dispatch(setMaxPrice(parseInt(value)));
   };
 
@@ -59,8 +61,8 @@ const FilteredPrice = () => {
           name="minPriceRange"
           min={defaultMinPrice}
           max={defaultMaxPrice}
-          placeholder={defaultMinPrice.toString()}
-          className="w-25"
+          placeholder={defaultMinPrice.toLocaleString()}
+          className="w-100"
           onChange={handleMinPrice}
         />
         <span>to</span>
@@ -69,14 +71,15 @@ const FilteredPrice = () => {
           name="maxPriceRange"
           min={defaultMinPrice}
           max={defaultMaxPrice}
-          placeholder={defaultMaxPrice.toString()}
-          className="w-25"
+          placeholder={defaultMaxPrice.toLocaleString()}
+          className="w-100"
           onChange={handleMaxPrice}
         />
-        <Button type="submit">
-          <FontAwesomeIcon icon={faGreaterThan} />
-        </Button>
       </div>
+      <Button type="submit" className="mt-2">
+        Filter by price
+        <FontAwesomeIcon icon={faGreaterThan} className="ms-2" />
+      </Button>
     </Form>
   );
 };

@@ -5,6 +5,7 @@ import Homepage from "./Homepage/Homepage";
 import Routes from "../Routes/Routes";
 import ProductPage from "./ProductPage/ProductPage";
 import BookmarksPage from "./BookmarksPage/BookmarksPage";
+import ShoppingCart from "./ShoppingCart/ShoppingCart";
 
 
 const router = createBrowserRouter([
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
       {
         path: Routes.Bookmarks,
         element: <BookmarksPage/>
-      }
+      },
+     {
+      path: Routes.ShoppingCart,
+      element: <ShoppingCart />
+     }
     ]
   }
 ])
