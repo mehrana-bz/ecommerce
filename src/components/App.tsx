@@ -6,11 +6,13 @@ import Routes from "../Routes/Routes";
 import ProductPage from "./ProductPage/ProductPage";
 import BookmarksPage from "./BookmarksPage/BookmarksPage";
 import ShoppingCart from "./ShoppingCart/ShoppingCart";
+import RouterError from "./RouterError/RouterError";
 
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
+    errorElement: <RouterError />,
     children:[
       {
         path: Routes.Homepage,
