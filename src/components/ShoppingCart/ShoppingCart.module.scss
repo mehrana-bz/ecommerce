@@ -1,0 +1,23 @@
+.shoppingCartText {
+  color: hsl(216, 62%, 41%);
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+.pics {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+.fs {
+  font-size: 13px;
+  text-decoration: none;
+  padding: 0 !important;
+}
+.productCount {
+  width: 60px !important;
+}
+
+.noCartText {
+  color: #285dab;
+}

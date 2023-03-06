@@ -1,8 +1,9 @@
 import { Col, Container, Row, Spinner } from "react-bootstrap";
+import axios from "axios";
+
 import { useAppSelector } from "../../store/hooks";
 import { selectBookmarks } from "../../store/states/bookmarks";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Product as ProductType } from "../../store/states/products";
 import Product from "../Homepage/Products/Product/Product";
 
@@ -26,7 +27,7 @@ const BookmarksPage = () => {
         )
         .finally(() => setIsLoading(false));
     });
-  }, [bookmarksState.length]);
+  }, [bookmarksState]);
 
   return (
     <Container>

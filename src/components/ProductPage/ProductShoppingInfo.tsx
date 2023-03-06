@@ -1,29 +1,15 @@
-import { Badge, Button } from "react-bootstrap";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { Badge } from "react-bootstrap";
 import { Product as ProductType } from "../../store/states/products";
 import styles from "./ProductPage.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCartShopping,
-  faEuroSign,
-  faPlus,
-  faHeart as faSolidHeart,
-} from "@fortawesome/free-solid-svg-icons";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { selectBookmarks, toggleBookmark } from "../../store/states/bookmarks";
+import { faEuroSign } from "@fortawesome/free-solid-svg-icons";
+import BookmarkBtn from "../BookmarkBtn/BookmarkBtn";
+import ShoppingCartBtn from "../ShoppingCartBtn/ShoppingCartBtn";
 interface ProductProps {
   product: ProductType;
 }
 
 const ProductShoppingInfo = ({ product }: ProductProps) => {
-  const dispatch = useAppDispatch();
-
-  const handleToggleBookmark = () => {
-    dispatch(toggleBookmark(product.id));
-  };
-
-  const bookmarksState = useAppSelector(selectBookmarks);
-
   return (
     <>
       <div className={styles.description}>{product.description}</div>
@@ -36,17 +22,8 @@ const ProductShoppingInfo = ({ product }: ProductProps) => {
           {product.price}
         </span>
         <div className="d-flex align-items-center gap-1">
-          <Button variant="outline-danger" onClick={handleToggleBookmark}>
-            <FontAwesomeIcon
-              icon={
-                bookmarksState.includes(product.id) ? faSolidHeart : faHeart
-              }
-            />
-          </Button>
-          <Button variant="primary" className="px-4">
-            <FontAwesomeIcon icon={faPlus} />
-            <FontAwesomeIcon icon={faCartShopping} />
-          </Button>
+          <BookmarkBtn productId={product.id} />
+          <ShoppingCartBtn productId={product.id} />
         </div>
       </div>
     </>
