@@ -9,6 +9,7 @@ const RouterError = () => {
         <Container>
             <h1>Oops!</h1>
             <p>Sorry, an unexpected error has occurred.</p>
+            <p>You can find more information below:</p>
             <p>
                 <i>{error.status}</i>
                 <br />
