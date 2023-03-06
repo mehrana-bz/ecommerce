@@ -1,46 +1,44 @@
-# Getting Started with Create React App
+# Ecommerce Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+This is an ecommerce project, which I developed to start using all my knowledge in a real world project. The project was so challenging to me but also fascinating and I enjoyed every minute of it.
 
-## Available Scripts
+The project is built on https://fakeapi.platzi.com fake api service.
 
-In the project directory, you can run:
+Many features have implemented on this project like: Products list, Filters of products, Search, Bookmark system, Shopping cart, and many more...
 
-### `npm start`
+These technologies are used within this Project:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React
+- Typescript
+- HTML
+- CSS
+- SCSS
+- Bootstrap
+  - react-bootstrap
+- Redux
+  - Redux thunk
+- React Router
+- Git
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Getting Started
 
-### `npm run build`
+To clone the project and get started on your local machine please follow these steps:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone https://github.com/mehrana-bz/ecommerce.git
+cd ecommerce
+npm install
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### Contact
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This project is made by love by Mehrana Bahramizadeh, So if you have any questions or need any help, Please feel free to contact:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Email:  mehranabahramizadeh@gmail.com
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+LinkedIn: https://www.linkedin.com/in/mehrana-bahramizadeh
