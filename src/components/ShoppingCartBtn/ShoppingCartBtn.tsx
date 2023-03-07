@@ -22,7 +22,7 @@ const ShoppingCartBtn = ({ productId }: ShoppingCartBtnProps) => {
 
     setTimeout(() => {
       setIsDisabled(false);
-    }, 2000);
+    }, 800);
   };
 
   return (
