@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import { faGreaterThan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { generatePath, useNavigate } from "react-router-dom";
@@ -43,38 +43,44 @@ const FilteredPrice = () => {
   const handleMinPrice = ({
     target: { value },
   }: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setMinPrice(parseInt(value)));
+    dispatch(setMinPrice(value ? parseInt(value) : undefined));
   };
   const handleMaxPrice = ({
     target: { value },
   }: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setMaxPrice(parseInt(value)));
+    dispatch(setMaxPrice(value ? parseInt(value) : undefined));
   };
 
   return (
     <Form onSubmit={handlePriceFilter}>
       <h4>Price</h4>
       <div className="d-flex align-items-center gap-2">
-        <span>€</span>
-        <Form.Control
-          type="number"
-          name="minPriceRange"
-          min={defaultMinPrice}
-          max={defaultMaxPrice}
-          placeholder={defaultMinPrice.toLocaleString()}
-          className="w-100"
-          onChange={handleMinPrice}
-        />
+        <InputGroup className="flex-nowrap">
+          <InputGroup.Text>€</InputGroup.Text>
+          <Form.Control
+            type="number"
+            name="minPriceRange"
+            min={defaultMinPrice}
+            max={defaultMaxPrice}
+            placeholder={defaultMinPrice.toLocaleString()}
+            className="w-100"
+            onChange={handleMinPrice}
+          />
+        </InputGroup>
+
         <span>to</span>
-        <Form.Control
-          type="number"
-          name="maxPriceRange"
-          min={defaultMinPrice}
-          max={defaultMaxPrice}
-          placeholder={defaultMaxPrice.toLocaleString()}
-          className="w-100"
-          onChange={handleMaxPrice}
-        />
+        <InputGroup className="flex-nowrap">
+          <InputGroup.Text>€</InputGroup.Text>
+          <Form.Control
+            type="number"
+            name="maxPriceRange"
+            min={defaultMinPrice}
+            max={defaultMaxPrice}
+            placeholder={defaultMaxPrice.toLocaleString()}
+            className="w-100"
+            onChange={handleMaxPrice}
+          />
+        </InputGroup>
       </div>
       <Button type="submit" className="mt-2">
         Filter by price

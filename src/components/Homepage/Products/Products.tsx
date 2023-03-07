@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { Col, Row, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-
+import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+
 import {
   getPageCount,
   getPaginatedProducts,
@@ -12,7 +13,7 @@ import { selectIsLoading } from "../../../store/states/isLoading";
 import PaginationPart from "./pagination/PaginationPart";
 import { selectPageCount } from "../../../store/states/pageCount";
 import Product from "./Product/Product";
-import classNames from "classnames";
+import styles from "./Products.module.scss";
 
 const Products = () => {
   // const [products , setProducts] = useState([]);
@@ -64,7 +65,20 @@ const Products = () => {
           />
         </>
       )}
-      {!isLoading && products.length === 0 && <div>😥 No Result found!!!</div>}
+      {!isLoading && products.length === 0 && (
+        <>
+          <div
+            className={classNames(
+              styles.noCartText,
+              "fw-bolder",
+              "fs-4",
+              "text-center"
+            )}
+          >
+            No Result found!!! 😥
+          </div>
+        </>
+      )}
     </>
   );
 };

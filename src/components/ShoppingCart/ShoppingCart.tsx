@@ -7,7 +7,7 @@ import { Product as ProductType } from "../../store/states/products";
 import styles from "./ShoppingCart.module.scss";
 import CartProduct from "./CartProduct";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faEuroSign } from "@fortawesome/free-solid-svg-icons";
+import { faEuroSign } from "@fortawesome/free-solid-svg-icons";
 import PayCard from "../icons/PayCard";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
@@ -19,18 +19,20 @@ const ShoppingCart = () => {
 
   const shoppingCartsState = useAppSelector(selectShoppingCart);
 
-  const totalAmount = products.reduce((sum , product) => {
-    const cartProduct = shoppingCartsState.find((cart) => cart.id === product.id);
-    if(!cartProduct) return sum;
-    
-    return sum + (product.price * cartProduct.count);
-  },0)
+  const totalAmount = products.reduce((sum, product) => {
+    const cartProduct = shoppingCartsState.find(
+      (cart) => cart.id === product.id
+    );
+    if (!cartProduct) return sum;
 
-
+    return sum + product.price * cartProduct.count;
+  }, 0);
 
   useEffect(() => {
     setIsLoading(shoppingCartsState.length > 0);
     setProducts([]);
+    const cartProductsLength = shoppingCartsState.length;
+    let successfulRequests = 0;
     shoppingCartsState.forEach(({ id: productId }) => {
       axios
         .get<ProductType>(
@@ -38,16 +40,21 @@ const ShoppingCart = () => {
         )
         .then((res) => res.data)
         .then((fetchedProduct) => {
-          setProducts((currentProducts) => [
-            ...currentProducts,
-            fetchedProduct,
-          ]);
+          setProducts((currentProducts) =>
+            [...currentProducts, fetchedProduct].sort((a, b) =>
+              a.id < b.id ? 1 : -1
+            )
+          );
+          successfulRequests++;
         })
         .finally(() => {
-          setIsLoading(false);
+          if (cartProductsLength === successfulRequests) {
+            setIsLoading(false);
+          }
         });
     });
-  }, [shoppingCartsState, shoppingCartsState.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shoppingCartsState.length]);
 
   return (
     <Container>
@@ -59,18 +66,28 @@ const ShoppingCart = () => {
       )}
 
       {!isLoading && products.length === 0 && (
-        <div>
-          <div className={classNames(styles.noCartText , "fw-bolder" , "fs-4" , "text-center")}>There's nothing in your shopping cart😟</div>
-          <Link to={Routes.Homepage} className="d-flex justify-content-center text-decoration-none mt-3">
-            <Button variant="success" className="px-4 py-2">Continue Shopping</Button>
+        <div className="d-flex flex-column align-items-center mt-5 gap-4">
+          <div
+            className={classNames(
+              styles.noCartText,
+              "fw-bolder",
+              "fs-4",
+              "text-center"
+            )}
+          >
+            There's nothing in your shopping cart😟
+          </div>
+          <Link
+            to={Routes.Homepage}
+            className="btn btn-success text-decoration-none px-4 py-2"
+          >
+            Continue Shopping
           </Link>
-
         </div>
       )}
 
       {!isLoading && products.length !== 0 && (
         <>
-          
           <Row className="flex-nowrap gap-4">
             <Col sm={9}>
               {products.map((product, index) => (
@@ -78,17 +95,19 @@ const ShoppingCart = () => {
               ))}
             </Col>
             <Col sm={3}>
-              <span className="d-block fw-semibold fs-5 mb-4">Delivery and service</span>
+              <span className="d-block fw-semibold fs-5 mb-4">
+                Delivery and service
+              </span>
               <div className="d-flex justify-content-between">
                 <div className="fw-bold">Total amount</div>
                 <div>
                   <FontAwesomeIcon icon={faEuroSign} className="me-1" />
                   {totalAmount.toLocaleString()}
-                  </div>
+                </div>
               </div>
               <Button className="w-100 mt-3 btn-success d-flex align-items-center gap-2 justify-content-center">
-                <PayCard/>
-                  I am ready to order</Button>
+                <PayCard />I am ready to order
+              </Button>
             </Col>
           </Row>
         </>
