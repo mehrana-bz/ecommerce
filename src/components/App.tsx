@@ -8,43 +8,45 @@ import BookmarksPage from "./BookmarksPage/BookmarksPage";
 import ShoppingCart from "./ShoppingCart/ShoppingCart";
 import RouterError from "./RouterError/RouterError";
 
-
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      element: <Layout />,
+      errorElement: <RouterError />,
+      children: [
+        {
+          path: Routes.Homepage,
+          element: <Homepage />,
+          children: [
+            {
+              path: Routes.Page,
+            },
+          ],
+        },
+        {
+          path: Routes.Product,
+          element: <ProductPage />,
+        },
+        {
+          path: Routes.Bookmarks,
+          element: <BookmarksPage />,
+        },
+        {
+          path: Routes.ShoppingCart,
+          element: <ShoppingCart />,
+        },
+      ],
+    },
+  ],
   {
-    element: <Layout />,
-    errorElement: <RouterError />,
-    children:[
-      {
-        path: Routes.Homepage,
-        element:<Homepage/>,
-        children: [
-          {
-            path: Routes.Page,
-          }
-        ]
-
-      },
-      {
-        path:Routes.Product,
-        element: <ProductPage />
-      },
-      {
-        path: Routes.Bookmarks,
-        element: <BookmarksPage/>
-      },
-     {
-      path: Routes.ShoppingCart,
-      element: <ShoppingCart />
-     }
-    ]
+    basename: process.env.NODE_ENV === "production" ? "/ecommerce" : "/",
   }
-])
+);
 
 function App() {
- 
   return (
     <div className="App">
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </div>
   );
 }

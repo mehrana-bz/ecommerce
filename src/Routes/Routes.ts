@@ -1,8 +1,9 @@
 const Routes = {
-   Homepage: "/",
+  Homepage: "/",
   Page: "/page/:number",
   Product: "/product/:id",
   Bookmarks: "/bookmarks",
-  ShoppingCart: "/cart"
- } as const;
+  ShoppingCart: "/cart",
+} as const;
+
 export default Routes;
