@@ -46,9 +46,9 @@ const Header = () => {
 
   return (
     <header id={styles.Header}>
-      <Navbar bg="light" variant="light" fixed="top" className="">
+      <Navbar bg="light" variant="light" fixed="top">
         <Container>
-          <Navbar.Brand as={Link} to={Routes.Homepage}>
+          <Navbar.Brand as={Link} to={Routes.Homepage} className="Websitelogo">
             <LogoIcon />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-dark-example" />
