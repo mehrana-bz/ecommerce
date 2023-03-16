@@ -6,3 +6,9 @@
 .bookmarkNumber{
     position: absolute;
 }
+
+@media screen and (min-width: 992px) {
+   .form {
+    width: 400px;
+   }
+}
