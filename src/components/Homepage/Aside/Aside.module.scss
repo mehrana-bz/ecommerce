@@ -1,5 +1,8 @@
 @import "../../../styles/variables";
+@import "~bootstrap/scss/bootstrap-utilities";
 
 #Aside {
-  top: calc(1rem + $header-height);
+  @include media-breakpoint-up(lg){
+    top: calc(1rem + $header-lg-height);
+  }
 }

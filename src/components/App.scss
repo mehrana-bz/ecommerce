@@ -12,3 +12,9 @@ $utilities: map-merge(
 );
 
 @import "~bootstrap/scss/bootstrap";
+
+.w-lg-auto{
+  @include media-breakpoint-up(lg){
+      width: auto !important;
+  }
+}
