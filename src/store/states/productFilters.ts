@@ -7,6 +7,7 @@ interface InitialState {
   categoryId?: number;
   minPrice?: number;
   maxPrice?: number;
+  showOffCanvas: boolean;
 }
 //initialStates
 const initialState: InitialState = {
@@ -14,6 +15,7 @@ const initialState: InitialState = {
   categoryId: undefined,
   minPrice: undefined,
   maxPrice: undefined,
+  showOffCanvas : false,
 };
 
 //slices
@@ -37,11 +39,14 @@ const slice = createSlice({
     setMaxPrice: (state, action: PayloadAction<InitialState["maxPrice"]>) => {
       state.maxPrice = action.payload;
     },
+    setShowOffCanvas: (state, action: PayloadAction<InitialState["showOffCanvas"]>) => {
+      state.showOffCanvas = action.payload;
+    }
   },
 });
 export default slice.reducer;
 
-export const { setSearch, setCategoryId, setMaxPrice, setMinPrice } =
+export const { setSearch, setCategoryId, setMaxPrice, setMinPrice, setShowOffCanvas } =
   slice.actions;
 
 export const { name } = slice;
@@ -55,3 +60,4 @@ export const selectMaxPrice = (state: RootState) =>
   state.productFilters.maxPrice;
 export const selectMinPrice = (state: RootState) =>
   state.productFilters.minPrice;
+  export const selectShowOffcanvas = (state:RootState) => state.productFilters.showOffCanvas;

@@ -1,7 +1,12 @@
 @import "../../styles/variables";
+@import "~bootstrap/scss/bootstrap-utilities";
 
 #Header{
     height: $header-height;
+
+    @include media-breakpoint-up(lg){
+        height: $header-lg-height;
+    }
 }
 .bookmarkNumber{
     position: absolute;
