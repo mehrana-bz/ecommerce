@@ -7,9 +7,11 @@ const Homepage = () => {
   return (
     <div className="Homepage">
       <Container>
-        <Row className="mt-5">
+        <Row>
           <Col xs={false} lg={3}>
-            <Aside />
+            <div className="bg-light h-100 p-3">
+              <Aside />
+            </div>
           </Col>
           <Col lg={9}>
             <Products />

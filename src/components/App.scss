@@ -8,7 +8,15 @@ $utilities: map-merge(
       property: cursor,
       values: auto default pointer wait text move help not-allowed
     ),
-  )
+    "min-viewport-height": (
+      property: min-height,
+      class: min-vh,
+      values: (
+        100: 100vh,
+        75: 75vh
+      )
+    )
+  ),
 );
 
 @import "~bootstrap/scss/bootstrap";

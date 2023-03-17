@@ -1,3 +1,15 @@
+@import "~bootstrap/scss/bootstrap-utilities";
+
 .noCartText {
-    color: #285dab;
-  }
+  color: #285dab;
+}
+.loadingWrapper {
+  --bs-bg-opacity: 0.5;
+  z-index: $zindex-sticky + 1;
+  top: 1.5rem;
+}
+.spinnerPosition {
+  top: calc(100vh / 2);
+  --bs-spinner-width: 4rem;
+    --bs-spinner-height: 4rem;
+}

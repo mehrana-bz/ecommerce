@@ -44,29 +44,31 @@ const Products = () => {
 
   return (
     <>
-      {isLoading && (
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      )}
-      {!isLoading && products.length !== 0 && (
-        <>
-          <Row xs={1} md={3} className="g-4">
-            {products.map((product) => (
-              <Col key={product.id}>
-                <Product product={product} />
-              </Col>
-            ))}
-          </Row>
-          <PaginationPart
-            pageCount={pageCount}
-            currentPage={currentPage}
-            className={classNames("mt-3", "bg-white", "sticky-bottom", "py-2")}
-          />
-        </>
-      )}
-      {!isLoading && products.length === 0 && (
-        <>
+      <div className="position-relative min-vh-75">
+        {isLoading && (
+          <div
+            className={classNames(
+              "position-absolute",
+              "start-0",
+              "end-0",
+              "bottom-0",
+              "bg-light",
+              "d-flex",
+              "justify-content-center",
+              styles.loadingWrapper
+            )}
+          >
+            <Spinner
+              animation="border"
+              role="status"
+              variant="primary"
+              className={classNames(styles.spinnerPosition, "position-sticky ")}
+            >
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        )}
+        {!isLoading && products.length === 0 && (
           <div
             className={classNames(
               styles.noCartText,
@@ -77,8 +79,24 @@ const Products = () => {
           >
             No Result found!!! 😥
           </div>
-        </>
-      )}
+        )}
+        {products.length > 0 && (
+          <Row xs={1} md={3} className="g-4">
+            {products.map((product) => (
+              <Col key={product.id}>
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
+        )}
+        {pageCount > 0 && (
+          <PaginationPart
+            pageCount={pageCount}
+            currentPage={currentPage}
+            className={classNames("mt-3", "bg-white", "sticky-bottom", "py-2")}
+          />
+        )}
+      </div>
     </>
   );
 };
