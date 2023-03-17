@@ -66,7 +66,7 @@ const ShoppingCart = () => {
       )}
 
       {!isLoading && products.length === 0 && (
-        <div className="d-flex flex-column align-items-center mt-5 gap-4">
+        <div className="d-flex flex-column align-items-center gap-4">
           <div
             className={classNames(
               styles.noCartText,
@@ -88,7 +88,7 @@ const ShoppingCart = () => {
 
       {!isLoading && products.length !== 0 && (
         <>
-          <Row className="flex-nowrap gap-4">
+          <Row className="flex-nowrap g-5">
             <Col sm={9}>
               {products.map((product, index) => (
                 <CartProduct product={product} key={index} />

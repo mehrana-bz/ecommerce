@@ -20,7 +20,7 @@ const Aside = () => {
       responsive="lg"
       id={styles.Aside}
     >
-      <Offcanvas.Header closeButton className="justify-content-end"/>
+      <Offcanvas.Header closeButton className="justify-content-end" />
       <Offcanvas.Body>
         <div>
           <CategoriesFilter />

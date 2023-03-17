@@ -56,7 +56,7 @@ const Header = () => {
   });
 
   return (
-    <header id={styles.Header}>
+    <header id={styles.Header} className="mb-4">
       <Navbar bg="light" variant="light" fixed="top" expand="lg">
         <Container className="d-flex flex-wrap justify-content-between gap-2">
           {isOnHomepage && <Navbar.Toggle onClick={handleShow} />}
