@@ -32,12 +32,12 @@ const PaginationPart = ({
   return (
     <ReactPaginate
       initialPage={currentPage - 1}
-      nextLabel="next >"
+      nextLabel=">"
       onPageChange={handleChangePage}
       pageRangeDisplayed={3}
       marginPagesDisplayed={2}
       pageCount={pageCount}
-      previousLabel="< previous"
+      previousLabel="<"
       pageClassName="page-item"
       pageLinkClassName="page-link"
       previousClassName="page-item"
