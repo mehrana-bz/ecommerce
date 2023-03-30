@@ -1,7 +1,5 @@
-.shoppingCartText {
-  color: hsl(216, 62%, 41%);
-  margin-bottom: 50px;
-}
+@import "~bootstrap/scss/bootstrap-utilities";
+
 .pics {
   object-fit: cover;
   object-position: center;

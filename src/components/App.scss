@@ -26,3 +26,9 @@ $utilities: map-merge(
       width: auto !important;
   }
 }
+
+.w-lg-50{
+  @include media-breakpoint-up(lg){
+      width: 50% !important;
+  }
+}

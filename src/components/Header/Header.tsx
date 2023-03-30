@@ -1,4 +1,10 @@
-import { Link, generatePath, matchPath, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  generatePath,
+  matchPath,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { Button, Container, Navbar, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -60,14 +66,22 @@ const Header = () => {
       <Navbar bg="light" variant="light" fixed="top" expand="lg">
         <Container className="d-flex flex-wrap justify-content-between gap-2">
           {isOnHomepage && <Navbar.Toggle onClick={handleShow} />}
-
-          <Navbar.Brand as={Link} to={Routes.Homepage} className="order-1">
+          <Navbar.Brand as={Link} to={Routes.Homepage} className="order-2 order-lg-1 mx-auto mx-lg-0">
             <LogoIcon />
           </Navbar.Brand>
+          <div className="order-1 order-lg-2 me-lg-auto">
+            <Link to={Routes.Register} className="fs-6 ms-2 text-decoration-none">
+              Register
+            </Link>
+            <span className="text-primary">/</span>
+            <Link to={Routes.Page} className="fs-6 text-decoration-none">
+              login
+            </Link>
+          </div>
           {isOnHomepage && (
             <Form
               onSubmit={handleSearchSubmit}
-              className="d-flex w-100 w-lg-auto order-3 order-lg-2"
+              className="d-flex w-100 w-lg-auto order-3 order-lg-2 me-lg-auto"
             >
               <Form.Control
                 type="search"
