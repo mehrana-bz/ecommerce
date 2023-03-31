@@ -3,9 +3,10 @@ import PageHeader from "../PageHeaders/PageHeader";
 import styles from "./Register.module.scss";
 import classNames from "classnames";
 import { FormEvent, useState } from "react";
+import axios from "axios";
 
 interface FormValues {
-  firstName:string;
+  firstName: string;
   lastName: string;
   email: string;
   password: string;
@@ -15,6 +16,7 @@ interface FormValues {
   userType: string;
   rule: boolean;
 }
+
 const Register = () => {
   const [formValues, setFormValues] = useState<FormValues>({
     firstName: "",
@@ -28,11 +30,7 @@ const Register = () => {
     rule: false,
   });
 
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    console.log(formValues);
-  };
+  const [errors, setErrors] = useState<string[]>([]);
 
   const handleInput = ({
     currentTarget: { value, name, checked, type },
@@ -59,7 +57,22 @@ const Register = () => {
     }
   };
 
-  
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    axios
+      .post("https://api.escuelajs.co/api/v1/users/", {
+        name: formValues.firstName + formValues.lastName,
+        email: formValues.email,
+        password: formValues.password,
+        avatar: "https://api.lorem.space/image/face?w=640&h=480&r=867",
+      })
+      .then((response) => console.log(response))
+      .catch((err) => {
+        const errMessages = err.response.data.message;
+        setErrors(errMessages);
+      });
+  };
 
   return (
     <Container>
@@ -78,7 +91,6 @@ const Register = () => {
                   value={formValues.firstName}
                 />
               </Form.Group>
-
             </Col>
             <Col lg={6}>
               <Form.Group controlId="lastName">
@@ -211,9 +223,15 @@ const Register = () => {
                 <Form.Label className={classNames("d-block", styles.label)}>
                   Type of User
                 </Form.Label>
-                {/* @ts-ignore */}
-                <Form.Select name="userType" onChange={handleInput} value={formValues.userType}>
-                  <option disabled value="">choose your job position</option>
+                <Form.Select
+                  name="userType"
+                  // @ts-ignore
+                  onChange={handleInput}
+                  value={formValues.userType}
+                >
+                  <option disabled value="">
+                    choose your job position
+                  </option>
                   <option value="customer">Customer</option>
                   <option value="admin">Admin</option>
                 </Form.Select>
@@ -240,9 +258,20 @@ const Register = () => {
                 />
               </Form.Group>
             </Col>
-            <Col lg={12}>
-              <Button variant="primary" type="submit">Register</Button>
+            <Col xs={12}>
+              <Button variant="primary" type="submit">
+                Register
+              </Button>
             </Col>
+            {errors.length > 0 && (
+              <Col xs={12}>
+                <ul>
+                  {errors.map((error , index) => (
+                    <li className="text-danger" key={index}>{error}</li>
+                  ))}
+                </ul>
+              </Col>
+            )}
           </Row>
         </Form>
       </div>
