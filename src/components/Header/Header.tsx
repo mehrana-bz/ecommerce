@@ -27,12 +27,16 @@ import LogoIcon from "../icons/LogoIcon";
 import styles from "./Header.module.scss";
 import { selectBookmarks } from "../../store/states/bookmarks";
 import { selectShoppingCart } from "../../store/states/shoppingCart";
+import { selectIsLogin, selectUser } from "../../store/states/authentication";
 
 const Header = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
+
+  const isLogin = useAppSelector(selectIsLogin);
+  const user = useAppSelector(selectUser);
 
   const search = useAppSelector(selectSearch);
 
@@ -66,17 +70,31 @@ const Header = () => {
       <Navbar bg="light" variant="light" fixed="top" expand="lg">
         <Container className="d-flex flex-wrap justify-content-between gap-2">
           {isOnHomepage && <Navbar.Toggle onClick={handleShow} />}
-          <Navbar.Brand as={Link} to={Routes.Homepage} className="order-2 order-lg-1 mx-auto mx-lg-0">
+          <Navbar.Brand
+            as={Link}
+            to={Routes.Homepage}
+            className="order-2 order-lg-1 mx-auto mx-lg-0"
+          >
             <LogoIcon />
           </Navbar.Brand>
           <div className="order-1 order-lg-2 me-lg-auto">
-            <Link to={Routes.Register} className="fs-6 ms-2 text-decoration-none">
-              Register
-            </Link>
-            <span className="text-primary">/</span>
-            <Link to={Routes.Page} className="fs-6 text-decoration-none">
-              login
-            </Link>
+            {!isLogin && (
+              <>
+                <Link
+                  to={Routes.Register}
+                  className="fs-6 ms-2 text-decoration-none"
+                >
+                  Register
+                </Link>
+                <span className="text-primary">/</span>
+                <Link to={Routes.Page} className="fs-6 text-decoration-none">
+                  login
+                </Link>
+              </>
+            )}
+            {isLogin && user && (
+              <div>{user.name}</div>
+            )}
           </div>
           {isOnHomepage && (
             <Form
