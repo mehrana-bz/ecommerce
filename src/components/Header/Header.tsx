@@ -6,7 +6,16 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import { Button, Container, Navbar, Form } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Navbar,
+  Form,
+  Image,
+  Ratio,
+  NavDropdown,
+} from "react-bootstrap";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChangeEvent, FormEvent } from "react";
 import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
@@ -27,7 +36,13 @@ import LogoIcon from "../icons/LogoIcon";
 import styles from "./Header.module.scss";
 import { selectBookmarks } from "../../store/states/bookmarks";
 import { selectShoppingCart } from "../../store/states/shoppingCart";
-import { selectIsLogin, selectUser } from "../../store/states/authentication";
+import {
+  selectIsLogin,
+  selectUser,
+  setIsLogin,
+  setUser,
+} from "../../store/states/authentication";
+import classNames from "classnames";
 
 const Header = () => {
   const location = useLocation();
@@ -65,8 +80,20 @@ const Header = () => {
     return matchPath(pattern, location.pathname) !== null;
   });
 
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    dispatch(setUser(undefined));
+    delete axios.defaults.headers.common["Authorization"];
+    dispatch(setIsLogin(false));
+  };
+
   return (
-    <header id={styles.Header} className="mb-4">
+    <header
+      id={styles.Header}
+      className={classNames({
+        [styles.isHomepage]: isOnHomepage,
+      })}
+    >
       <Navbar bg="light" variant="light" fixed="top" expand="lg">
         <Container className="d-flex flex-wrap justify-content-between gap-2">
           {isOnHomepage && <Navbar.Toggle onClick={handleShow} />}
@@ -87,13 +114,36 @@ const Header = () => {
                   Register
                 </Link>
                 <span className="text-primary">/</span>
-                <Link to={Routes.Page} className="fs-6 text-decoration-none">
+                <Link to={Routes.Login} className="fs-6 text-decoration-none">
                   login
                 </Link>
               </>
             )}
             {isLogin && user && (
-              <div>{user.name}</div>
+              <div className="d-flex align-items-center gap-2">
+                <div>
+                  <Ratio aspectRatio="1x1" className={styles.profileImg}>
+                    <Image
+                      roundedCircle
+                      src={user.avatar}
+                      className="object-fit-cover bg-secondary"
+                    />
+                  </Ratio>
+                </div>
+
+                <NavDropdown
+                  title={<Navbar.Text>{user.name}</Navbar.Text>}
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown.Item
+                    as="div"
+                    onClick={handleLogout}
+                    className="cursor-pointer"
+                  >
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </div>
             )}
           </div>
           {isOnHomepage && (

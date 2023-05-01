@@ -5,6 +5,7 @@ const Routes = {
   Bookmarks: "/bookmarks",
   ShoppingCart: "/cart",
   Register: "register",
+  Login: "login",
 } as const;
 
 export default Routes;

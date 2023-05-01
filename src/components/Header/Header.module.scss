@@ -3,11 +3,21 @@
 
 #Header{
     height: $header-height;
+    margin-bottom: $header-margin-bottom;
+}
+
+.isHomepage{
+    height: $header-homepage-height;
 
     @include media-breakpoint-up(lg){
-        height: $header-lg-height;
+        height: $header-height;
     }
 }
+
 .bookmarkNumber{
     position: absolute;
+}
+
+.profileImg{
+    width: 30px;
 }

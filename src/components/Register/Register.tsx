@@ -7,15 +7,18 @@ import {
   Row,
   Spinner,
 } from "react-bootstrap";
-import PageHeader from "../PageHeaders/PageHeader";
-import styles from "./Register.module.scss";
 import classNames from "classnames";
 import { FocusEvent, FormEvent, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import styles from "./Register.module.scss";
+import {
+  loginUser,
+} from "../../store/states/authentication";
 import Routes from "../../Routes/Routes";
-import { useDispatch } from "react-redux";
-import { setIsLogin, setUser } from "../../store/states/authentication";
+import PageHeader from "../PageHeaders/PageHeader";
+import { useAppDispatch } from "../../store/hooks";
 
 interface FormValues {
   firstName: string;
@@ -65,7 +68,7 @@ const Register = () => {
   });
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [errors, setErrors] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -246,34 +249,10 @@ const Register = () => {
         name: formValues.firstName + " " + formValues.lastName,
         email: formValues.email,
         password: formValues.password,
-        avatar: "https://api.lorem.space/image/face?w=640&h=480&r=867",
+        avatar: "https://i.pravatar.cc/100",
       })
-      .then((response) => response.data)
-      .then((data) => {
-        dispatch(setUser(data));
-        return axios.post(" https://api.escuelajs.co/api/v1/auth/login", {
-          email: formValues.email,
-          password: formValues.password,
-        });
-      })
-      .then(({ data: { access_token, refresh_token } }) => {
-        localStorage.setItem(
-          "authToken",
-          JSON.stringify({
-            accessToken: access_token,
-            refreshToken: refresh_token,
-            createdAt: Date.now(),
-          })
-        );
-        //setTimeout to refresh accessToken
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${access_token}`;
-
-        navigate(Routes.Homepage);
-
-        dispatch(setIsLogin(true));
-      })
+      .then(() => dispatch(loginUser(formValues.email, formValues.password)))
+      .then(() => navigate(Routes.Homepage))
       .catch((err) => {
         const errMessages = err.response.data.message;
         setErrors(errMessages);
