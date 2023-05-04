@@ -13,12 +13,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./Register.module.scss";
-import {
-  loginUser,
-} from "../../store/states/authentication";
+import { loginUser } from "../../store/states/authentication";
 import Routes from "../../Routes/Routes";
 import PageHeader from "../PageHeaders/PageHeader";
 import { useAppDispatch } from "../../store/hooks";
+import ChildComponent from "./ChildComponent";
 
 interface FormValues {
   firstName: string;
@@ -73,6 +72,48 @@ const Register = () => {
   const [errors, setErrors] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const hobbiesOptions = [
+    {
+      label: "Music",
+      value: "music",
+      checked: formValues.hobbies.includes("music"),
+      id: "music",
+    },
+    {
+      label: "Sports",
+      checked: formValues.hobbies.includes("sports"),
+      value: "sports",
+      id: "sports",
+    },
+    {
+      label: "Travel",
+      checked: formValues.hobbies.includes("travel"),
+      value: "travel",
+      id: "travel",
+    },
+    {
+      label: "Movie",
+      checked: formValues.hobbies.includes("movie"),
+      value: "movie",
+      id: "movie",
+    },
+  ];
+
+  const genderOptions = [
+    {
+      label: "Male",
+      value: "male",
+      checked: formValues.gender === "male",
+      id: "male",
+    },
+    {
+      label: "Female",
+      value: "female",
+      checked: formValues.gender === "female",
+      id: "female",
+    },
+  ];
+
   const handleInput = ({
     currentTarget: { value, name, checked, type },
   }: FormEvent<HTMLInputElement>) => {
@@ -97,13 +138,6 @@ const Register = () => {
       }));
     }
   };
-
-  // const handleInputErrors = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if(formValues.firstName === "" || formValues.length < 3){
-  //     setErrorMessages()
-  //   }
-  // }
 
   const validateInput = ({
     currentTarget: { name },
@@ -269,219 +303,93 @@ const Register = () => {
         <Form onSubmit={handleFormSubmit} noValidate>
           <Row className="gx-3 gy-4">
             <Col lg={6}>
-              <Form.Group controlId="firstName">
-                <Form.Label className={styles.label}>First name*</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your firstname..."
-                  name="firstName"
-                  onInput={handleInput}
-                  value={formValues.firstName}
-                  required
-                  onBlur={validateInput}
-                  onFocus={resetValidation}
-                  isInvalid={errorMessages.firstName.length > 0}
-                />
-                <Form.Control.Feedback
-                  type="invalid"
-                  className={styles.errorMessages}
-                >
-                  {errorMessages.firstName}
-                </Form.Control.Feedback>
-              </Form.Group>
+              <ChildComponent
+                name="firstName"
+                title="Firstname*"
+                type="text"
+                placeholder="Enter your firstname..."
+                onChange={handleInput}
+                value={formValues.firstName}
+                onBlur={validateInput}
+                onFocus={resetValidation}
+                err={errorMessages.firstName}
+              />
             </Col>
             <Col lg={6}>
-              <Form.Group controlId="lastName">
-                <Form.Label className={styles.label}>Last name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your lastname..."
-                  name="lastName"
-                  onInput={handleInput}
-                  onBlur={validateInput}
-                  onFocus={resetValidation}
-                  value={formValues.lastName}
-                  required
-                  isInvalid={errorMessages.lastName.length > 0}
-                />
-                <Form.Control.Feedback
-                  type="invalid"
-                  className={styles.errorMessages}
-                >
-                  {errorMessages.lastName}
-                </Form.Control.Feedback>
-              </Form.Group>
+              <ChildComponent
+                type="text"
+                placeholder="Enter your lastname..."
+                name="lastName"
+                title="Lastname*"
+                onChange={handleInput}
+                onBlur={validateInput}
+                onFocus={resetValidation}
+                value={formValues.lastName}
+                err={errorMessages.lastName}
+              />
             </Col>
             <Col lg={12}>
-              <Form.Group controlId="email">
-                <Form.Label className={styles.label}>Email*</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter your email..."
-                  name="email"
-                  onInput={handleInput}
-                  onBlur={validateInput}
-                  onFocus={resetValidation}
-                  value={formValues.email}
-                  required
-                  isInvalid={errorMessages.email.length > 0}
-                />
-                <Form.Control.Feedback
-                  type="invalid"
-                  className={styles.errorMessages}
-                >
-                  {errorMessages.email}
-                </Form.Control.Feedback>
-              </Form.Group>
+              <ChildComponent
+                type="email"
+                title="Email*"
+                placeholder="Enter your email..."
+                name="email"
+                onChange={handleInput}
+                onBlur={validateInput}
+                onFocus={resetValidation}
+                value={formValues.email}
+                err={errorMessages.email}
+              />
             </Col>
             <Col lg={6}>
-              <Form.Group controlId="password">
-                <Form.Label className={styles.label}>Password*</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter your password..."
-                  name="password"
-                  onInput={handleInput}
-                  onBlur={validateInput}
-                  onFocus={resetValidation}
-                  value={formValues.password}
-                  required
-                  isInvalid={errorMessages.password.length > 0}
-                />
-                <Form.Control.Feedback
-                  type="invalid"
-                  className={styles.errorMessages}
-                >
-                  {errorMessages.password}
-                </Form.Control.Feedback>
-              </Form.Group>
+              <ChildComponent
+                type="password"
+                title="Password*"
+                placeholder="Enter your password..."
+                name="password"
+                onChange={handleInput}
+                onBlur={validateInput}
+                onFocus={resetValidation}
+                value={formValues.password}
+                err={errorMessages.password}
+              />
             </Col>
             <Col lg={6}>
-              <Form.Group controlId="confirmPassword">
-                <Form.Label className={styles.label}>
-                  Confirm Password*
-                </Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter your password again..."
-                  name="confirmPassword"
-                  onInput={handleInput}
-                  onBlur={validateInput}
-                  onFocus={resetValidation}
-                  value={formValues.confirmPassword}
-                  required
-                  isInvalid={errorMessages.confirmPassword.length > 0}
-                />
-                <Form.Control.Feedback
-                  type="invalid"
-                  className={styles.errorMessages}
-                >
-                  {errorMessages.confirmPassword}
-                </Form.Control.Feedback>
-              </Form.Group>
+              <ChildComponent
+                type="password"
+                title="Confirm Password*"
+                placeholder="Enter your password again..."
+                name="confirmPassword"
+                onChange={handleInput}
+                onBlur={validateInput}
+                onFocus={resetValidation}
+                value={formValues.confirmPassword}
+                err={errorMessages.confirmPassword}
+              />
             </Col>
             <Col lg={6}>
-              <Form.Group controlId="gender">
-                <Form.Label className={classNames("d-block", styles.label)}>
-                  Gender*
-                </Form.Label>
-                <Form.Check
-                  inline
-                  label="Male"
-                  type="radio"
-                  value="male"
-                  checked={formValues.gender === "male"}
-                  name="gender"
-                  id="male"
-                  onBlur={validateInput}
-                  onFocus={resetValidation}
-                  onChange={handleInput}
-                />
-                <Form.Check
-                  inline
-                  label="Female"
-                  type="radio"
-                  value="female"
-                  checked={formValues.gender === "female"}
-                  name="gender"
-                  id="female"
-                  onBlur={validateInput}
-                  onFocus={resetValidation}
-                  onChange={handleInput}
-                />
-                <Form.Control.Feedback
-                  type="invalid"
-                  className={classNames(styles.errorMessages, {
-                    "d-block": errorMessages.gender.length > 0,
-                  })}
-                >
-                  {errorMessages.gender}
-                </Form.Control.Feedback>
-              </Form.Group>
+              <ChildComponent
+                type="radio"
+                title="Gender*"
+                options={genderOptions}
+                name="gender"
+                onChange={handleInput}
+                onBlur={validateInput}
+                onFocus={resetValidation}
+                err={errorMessages.gender}
+              />
             </Col>
             <Col lg={6}>
-              <Form.Group>
-                <Form.Label className={classNames("d-block", styles.label)}>
-                  Hobbies
-                </Form.Label>
-                <Form.Check
-                  inline
-                  type="checkbox"
-                  label="Music"
-                  name="hobbies"
-                  id="music"
-                  checked={formValues.hobbies.includes("music")}
-                  value="music"
-                  onBlur={validateInput}
-                  onFocus={resetValidation}
-                  onChange={handleMultiSelectCheckboxChange}
-                />
-                <Form.Check
-                  inline
-                  type="checkbox"
-                  label="Sports"
-                  name="hobbies"
-                  id="sports"
-                  checked={formValues.hobbies.includes("sports")}
-                  value="sports"
-                  onChange={handleMultiSelectCheckboxChange}
-                  onBlur={validateInput}
-                  onFocus={resetValidation}
-                />
-                <Form.Check
-                  inline
-                  type="checkbox"
-                  label="Travel"
-                  name="hobbies"
-                  id="travel"
-                  checked={formValues.hobbies.includes("travel")}
-                  value="travel"
-                  onChange={handleMultiSelectCheckboxChange}
-                  onBlur={validateInput}
-                  onFocus={resetValidation}
-                />
-                <Form.Check
-                  inline
-                  type="checkbox"
-                  label="Movie"
-                  name="hobbies"
-                  id="movie"
-                  checked={formValues.hobbies.includes("movie")}
-                  value="movie"
-                  onChange={handleMultiSelectCheckboxChange}
-                  onBlur={validateInput}
-                  onFocus={resetValidation}
-                  className="mx-0"
-                />
-                <Form.Control.Feedback
-                  type="invalid"
-                  className={classNames(styles.errorMessages, {
-                    "d-block": errorMessages.hobbies.length > 0,
-                  })}
-                >
-                  {errorMessages.hobbies}
-                </Form.Control.Feedback>
-              </Form.Group>
+              <ChildComponent
+                type="checkbox"
+                title="Hobbies"
+                options={hobbiesOptions}
+                name="hobbies"
+                onBlur={validateInput}
+                onFocus={resetValidation}
+                onChange={handleMultiSelectCheckboxChange}
+                err={errorMessages.hobbies}
+              />
             </Col>
             <Col lg={6}>
               <Form.Group controlId="userType">
