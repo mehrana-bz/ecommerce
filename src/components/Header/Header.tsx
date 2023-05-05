@@ -15,7 +15,6 @@ import {
   Ratio,
   NavDropdown,
 } from "react-bootstrap";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChangeEvent, FormEvent } from "react";
 import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
@@ -37,10 +36,9 @@ import styles from "./Header.module.scss";
 import { selectBookmarks } from "../../store/states/bookmarks";
 import { selectShoppingCart } from "../../store/states/shoppingCart";
 import {
+  logout,
   selectIsLogin,
   selectUser,
-  setIsLogin,
-  setUser,
 } from "../../store/states/authentication";
 import classNames from "classnames";
 
@@ -81,10 +79,7 @@ const Header = () => {
   });
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    dispatch(setUser(undefined));
-    delete axios.defaults.headers.common["Authorization"];
-    dispatch(setIsLogin(false));
+    dispatch(logout());
   };
 
   return (

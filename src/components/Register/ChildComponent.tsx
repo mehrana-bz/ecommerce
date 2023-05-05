@@ -74,6 +74,7 @@ const ChildComponent = ({
       {(otherProps.type === "radio" || otherProps.type === "checkbox") &&
         otherProps.options.map(({ label, value, id, checked }, index) => (
           <Form.Check
+            key={index}
             inline
             label={label}
             type={otherProps.type}
