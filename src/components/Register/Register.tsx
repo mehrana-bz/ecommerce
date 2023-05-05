@@ -273,7 +273,10 @@ const Register = () => {
       }
     }
 
-    if (!isFormValid) return;
+    if (!isFormValid) {
+      setErrors(["Please check all the fields."]);
+      return;
+    }
 
     setErrors([]);
     setIsLoading(true);
