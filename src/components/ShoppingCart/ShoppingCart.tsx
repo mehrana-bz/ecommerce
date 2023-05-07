@@ -12,6 +12,7 @@ import PayCard from "../icons/PayCard";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import Routes from "../../Routes/Routes";
+import PageHeader from "../PageHeaders/PageHeader";
 
 const ShoppingCart = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +59,7 @@ const ShoppingCart = () => {
 
   return (
     <Container>
-      <h2 className={styles.shoppingCartText}>SHOPPING CART</h2>
+      <PageHeader>SHOPPING CART</PageHeader>
       {isLoading && (
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>

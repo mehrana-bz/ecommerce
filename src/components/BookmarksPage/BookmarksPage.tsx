@@ -12,6 +12,7 @@ import Product from "../Homepage/Products/Product/Product";
 import styles from "./BookmarksPage.module.scss";
 import { Link } from "react-router-dom";
 import Routes from "../../Routes/Routes";
+import PageHeader from "../PageHeaders/PageHeader";
 
 const BookmarksPage = () => {
   const bookmarksState = useAppSelector(selectBookmarks);
@@ -45,6 +46,7 @@ const BookmarksPage = () => {
 
   return (
     <Container>
+      <PageHeader>WISH LIST</PageHeader>
       {isLoading && (
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>

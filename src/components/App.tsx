@@ -7,6 +7,8 @@ import ProductPage from "./ProductPage/ProductPage";
 import BookmarksPage from "./BookmarksPage/BookmarksPage";
 import ShoppingCart from "./ShoppingCart/ShoppingCart";
 import RouterError from "./RouterError/RouterError";
+import Register from "./Register/Register";
+import Login from "./Login/Login";
 
 const router = createBrowserRouter(
   [
@@ -34,6 +36,14 @@ const router = createBrowserRouter(
         {
           path: Routes.ShoppingCart,
           element: <ShoppingCart />,
+        },
+        {
+          path: Routes.Register,
+          element: <Register />
+        },
+        {
+          path: Routes.Login,
+          element: <Login />
         },
       ],
     },

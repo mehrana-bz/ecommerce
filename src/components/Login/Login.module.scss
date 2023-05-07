@@ -1,0 +1,12 @@
+@import "~bootstrap/scss/bootstrap-utilities";
+@import "../../styles/variables";
+
+.label {
+  color: $blue-600;
+  margin-bottom: 0;
+}
+
+
+.middleLoginBox {
+    min-height: calc(90vh - ($header-height + $header-margin-bottom + $header-margin-bottom));
+}
