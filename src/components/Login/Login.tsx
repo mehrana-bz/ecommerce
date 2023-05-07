@@ -8,6 +8,7 @@ import { loginUser } from "../../store/states/authentication";
 import { useAppDispatch } from "../../store/hooks";
 import { useNavigate } from "react-router-dom";
 import Routes from "../../Routes/Routes";
+import Field from "../Register/Field";
 
 interface ErrorMessages {
   email: string;
@@ -95,7 +96,7 @@ const Login = () => {
             password: "Password is required.",
           }));
           isValid = false;
-        } 
+        }
         break;
     }
 
@@ -116,45 +117,29 @@ const Login = () => {
     >
       <div className="w-25 mx-auto">
         <PageHeader>Login</PageHeader>
-        <Form className="d-flex flex-column gap-3" onSubmit={handleLogin}>
-          <Form.Group controlId="email">
-            <Form.Label className={styles.label}>Email*</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter your email..."
-              name="email"
-              onInput={handleInput}
-              onBlur={validateInput}
-              onFocus={resetValidation}
-              value={formValues.email}
-              isInvalid={errorMessages.email.length > 0}
-            />
-            <Form.Control.Feedback
-              type="invalid"
-              className={styles.errorMessages}
-            >
-              {errorMessages.email}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group controlId="password">
-            <Form.Label className={styles.label}>Password*</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Enter your password..."
-              name="password"
-              onInput={handleInput}
-              onBlur={validateInput}
-              onFocus={resetValidation}
-              value={formValues.password}
-              isInvalid={errorMessages.password.length > 0}
-            />
-            <Form.Control.Feedback
-              type="invalid"
-              className={styles.errorMessages}
-            >
-              {errorMessages.password}
-            </Form.Control.Feedback>
-          </Form.Group>
+        <Form className="d-flex flex-column gap-3" onSubmit={handleLogin} noValidate>
+          <Field
+            type="email"
+            title="Email*"
+            placeholder="Enter your email..."
+            name="email"
+            onChange={handleInput}
+            onBlur={validateInput}
+            onFocus={resetValidation}
+            value={formValues.email}
+            err={errorMessages.email}
+          />
+          <Field
+            type="password"
+            title="Password*"
+            placeholder="Enter your password..."
+            name="password"
+            onChange={handleInput}
+            onBlur={validateInput}
+            onFocus={resetValidation}
+            value={formValues.password}
+            err={errorMessages.password}
+          />
           {errors.length > 0 && (
             <Alert variant="danger">
               <ul className="m-0">

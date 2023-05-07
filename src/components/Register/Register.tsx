@@ -17,7 +17,7 @@ import { loginUser } from "../../store/states/authentication";
 import Routes from "../../Routes/Routes";
 import PageHeader from "../PageHeaders/PageHeader";
 import { useAppDispatch } from "../../store/hooks";
-import ChildComponent from "./ChildComponent";
+import Field from "./Field";
 
 interface FormValues {
   firstName: string;
@@ -306,7 +306,7 @@ const Register = () => {
         <Form onSubmit={handleFormSubmit} noValidate>
           <Row className="gx-3 gy-4">
             <Col lg={6}>
-              <ChildComponent
+              <Field
                 name="firstName"
                 title="Firstname*"
                 type="text"
@@ -319,7 +319,7 @@ const Register = () => {
               />
             </Col>
             <Col lg={6}>
-              <ChildComponent
+              <Field
                 type="text"
                 placeholder="Enter your lastname..."
                 name="lastName"
@@ -332,7 +332,7 @@ const Register = () => {
               />
             </Col>
             <Col lg={12}>
-              <ChildComponent
+              <Field
                 type="email"
                 title="Email*"
                 placeholder="Enter your email..."
@@ -345,7 +345,7 @@ const Register = () => {
               />
             </Col>
             <Col lg={6}>
-              <ChildComponent
+              <Field
                 type="password"
                 title="Password*"
                 placeholder="Enter your password..."
@@ -358,7 +358,7 @@ const Register = () => {
               />
             </Col>
             <Col lg={6}>
-              <ChildComponent
+              <Field
                 type="password"
                 title="Confirm Password*"
                 placeholder="Enter your password again..."
@@ -371,7 +371,7 @@ const Register = () => {
               />
             </Col>
             <Col lg={6}>
-              <ChildComponent
+              <Field
                 type="radio"
                 title="Gender*"
                 options={genderOptions}
@@ -383,7 +383,7 @@ const Register = () => {
               />
             </Col>
             <Col lg={6}>
-              <ChildComponent
+              <Field
                 type="checkbox"
                 title="Hobbies"
                 options={hobbiesOptions}

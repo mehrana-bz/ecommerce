@@ -41,7 +41,7 @@ interface FormCheck extends ChildComponentPropsBase {
 
 type ChildComponentProps = FormControl | FormCheck;
 
-const ChildComponent = ({
+const Field = ({
   name,
   title,
   onBlur,
@@ -52,23 +52,27 @@ const ChildComponent = ({
 }: ChildComponentProps) => {
   const isInvalid = err ? err.length > 0 : false;
 
+  const isNotMultiSelect = (props: any): props is FormControl =>
+    !["checkbox", "radio"].includes(props.type);
+
   return (
     <Form.Group controlId={name}>
       <Form.Label className={classNames("d-block", styles.label)}>
         {title}
       </Form.Label>
-      {otherProps.type !== "checkbox" && otherProps.type !== "radio" && (
+      {isNotMultiSelect(otherProps) && (
         <Form.Control
           type={otherProps.type}
-          placeholder={(otherProps as FormControl).placeholder}
+          placeholder={otherProps.placeholder}
           name={name}
           title={title}
           onInput={onChange}
-          value={(otherProps as FormControl).value}
+          value={otherProps.value}
           required
           onBlur={onBlur}
           onFocus={onFocus}
           isInvalid={isInvalid}
+          autoComplete="new-password"
         />
       )}
       {(otherProps.type === "radio" || otherProps.type === "checkbox") &&
@@ -102,4 +106,4 @@ const ChildComponent = ({
     </Form.Group>
   );
 };
-export default ChildComponent;
+export default Field;
