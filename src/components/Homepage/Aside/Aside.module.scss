@@ -3,6 +3,6 @@
 
 #Aside {
   @include media-breakpoint-up(lg){
-    top: calc($header-margin-bottom + $header-height);
+    top: calc($header-margin-top + $header-height);
   }
 }

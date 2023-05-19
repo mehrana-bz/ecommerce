@@ -58,7 +58,7 @@ const ShoppingCart = () => {
   }, [shoppingCartsState.length]);
 
   return (
-    <Container>
+    <Container className={styles.margin}>
       <PageHeader>SHOPPING CART</PageHeader>
       {isLoading && (
         <Spinner animation="border" role="status">

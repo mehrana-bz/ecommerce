@@ -45,7 +45,7 @@ const BookmarksPage = () => {
   }, [bookmarksState.length]);
 
   return (
-    <Container>
+    <Container className={styles.margin}>
       <PageHeader>WISH LIST</PageHeader>
       {isLoading && (
         <Spinner animation="border" role="status">

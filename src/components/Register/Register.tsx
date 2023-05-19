@@ -11,6 +11,7 @@ import classNames from "classnames";
 import { FocusEvent, FormEvent, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 
 import styles from "./Register.module.scss";
 import { loginUser } from "../../store/states/authentication";
@@ -42,6 +43,52 @@ interface ErrorMessages {
   rule: string;
 }
 
+const registerSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .required("First name is required")
+    .min(3)
+    .when("isSubmit", {
+      is: true,
+      then: (schema) => schema.trim(),
+    }),
+  lastName: Yup.string()
+    .required("Last name is required")
+    .min(3)
+    .when("isSubmit", {
+      is: true,
+      then: (schema) => schema.trim(),
+    }),
+  email: Yup.string()
+    .required()
+    .email()
+    .lowercase()
+    .when("isSubmit", {
+      is: true,
+      then: (schema) => schema.trim(),
+    }),
+  password: Yup.string()
+    .required()
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d)/,
+      "Password must contain at least one uppercase letter and one number"
+    )
+    .min(6),
+  confirmPassword: Yup.string()
+    .required()
+    .oneOf([Yup.ref("password")]),
+  gender: Yup.string()
+    .required()
+    .oneOf(["male", "female"], "Gender is required"),
+  hobbies: Yup.array()
+    .required()
+    .of(Yup.string().oneOf(["music", "sports", "travel", "movie"]))
+    .min(1, "Select at least one hobby"),
+  userType: Yup.string()
+    .required()
+    .oneOf(["customer", "admin"], "User type is required"),
+  rule: Yup.boolean().required().oneOf([true]),
+});
+
 const Register = () => {
   const [formValues, setFormValues] = useState<FormValues>({
     firstName: "",
@@ -54,6 +101,7 @@ const Register = () => {
     userType: "",
     rule: false,
   });
+
   const [errorMessages, setErrorMessages] = useState<ErrorMessages>({
     firstName: "",
     lastName: "",
@@ -117,10 +165,13 @@ const Register = () => {
   const handleInput = ({
     currentTarget: { value, name, checked, type },
   }: FormEvent<HTMLInputElement>) => {
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    setFormValues(
+      (prevValues) =>
+        registerSchema.cast({
+          ...prevValues,
+          [name]: type === "checkbox" ? checked : value,
+        }) as FormValues
+    );
   };
 
   const handleMultiSelectCheckboxChange = ({
@@ -141,110 +192,15 @@ const Register = () => {
 
   const validateInput = ({
     currentTarget: { name },
-  }: FocusEvent<HTMLInputElement>): boolean => {
-    let isValid = true;
-
-    switch (name) {
-      case "firstName":
-        if (formValues.firstName.length < 3) {
-          setErrorMessages((currentErrors) => ({
-            ...currentErrors,
-            firstName: "fill the field please.",
-          }));
-          isValid = false;
-        }
-        break;
-      case "lastName":
-        if (formValues.lastName.length < 3) {
-          setErrorMessages((currentErrors) => ({
-            ...currentErrors,
-            lastName: "fill the field please.",
-          }));
-          isValid = false;
-        }
-        break;
-      case "email":
-        if (
-          !new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i).test(
-            formValues.email
-          )
-        ) {
-          setErrorMessages((currentErrors) => ({
-            ...currentErrors,
-            email: "fill the field correctly please.",
-          }));
-          isValid = false;
-        }
-        break;
-      case "password":
-        if (!new RegExp(/(?=.{8,16}$)/).test(formValues.password)) {
-          setErrorMessages((currentErrors) => ({
-            ...currentErrors,
-            password: "Length of password should be between range 8 to 16",
-          }));
-          isValid = false;
-        } else if (!new RegExp(/(?=.*[A-Z])/).test(formValues.password)) {
-          setErrorMessages((currentErrors) => ({
-            ...currentErrors,
-            password: "Password should contains a Capital letter",
-          }));
-          isValid = false;
-        }
-        break;
-      case "confirmPassword":
-        if (formValues.confirmPassword.length === 0) {
-          setErrorMessages((currentErrors) => ({
-            ...currentErrors,
-            confirmPassword: "You need to enter confirm password.",
-          }));
-          isValid = false;
-        } else if (formValues.password !== formValues.confirmPassword) {
-          setErrorMessages((currentErrors) => ({
-            ...currentErrors,
-            confirmPassword: "Passwords do not match, Please try again.",
-          }));
-          isValid = false;
-        }
-        break;
-      case "gender":
-        if (!formValues.gender) {
-          setErrorMessages((currentErrors) => ({
-            ...currentErrors,
-            gender: "Please select your gender.",
-          }));
-          isValid = false;
-        }
-        break;
-      case "hobbies":
-        if (formValues.hobbies.length === 0) {
-          setErrorMessages((currentErrors) => ({
-            ...currentErrors,
-            hobbies: "Please select your hobbies.",
-          }));
-          isValid = false;
-        }
-        break;
-      case "userType":
-        if (formValues.userType === "") {
-          setErrorMessages((currentErrors) => ({
-            ...currentErrors,
-            userType: "Please select your userType.",
-          }));
-          isValid = false;
-        }
-        break;
-      case "rule":
-        if (!formValues.rule) {
-          setErrorMessages((currentErrors) => ({
-            ...currentErrors,
-            rule: "You must agree before submitting..",
-          }));
-          isValid = false;
-        }
-        break;
-    }
-
-    return isValid;
+  }: FocusEvent<HTMLInputElement>): void => {
+    registerSchema
+      .validateAt(name, formValues)
+      .catch((err: Yup.ValidationError) => {
+        setErrorMessages((currentErrorMessages) => ({
+          ...currentErrorMessages,
+          [name]: err.message,
+        }));
+      });
   };
 
   const resetValidation = ({
@@ -256,39 +212,73 @@ const Register = () => {
     }));
   };
 
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isLoading) return;
+    setErrors([]);
 
-    let isFormValid = true;
-    for (const name in formValues) {
-      const isValid = validateInput({
-        // @ts-ignore
-        currentTarget: {
-          name,
-        },
-      });
-      if (!isValid) {
-        isFormValid = false;
-      }
-    }
+    const normalizedFormValues = registerSchema.cast(
+      registerSchema.cast({
+        isSubmit: true,
+        ...formValues,
+      }),
+      { stripUnknown: true }
+    );
+
+    const isFormValid = await registerSchema.isValid(normalizedFormValues, {
+      abortEarly: false,
+    });
 
     if (!isFormValid) {
-      setErrors(["Please check all the fields."]);
+      registerSchema
+        .validate(normalizedFormValues, { abortEarly: false })
+        .catch((err: Yup.ValidationError) => {
+          const firstInvalidInput = err.inner[0].path;
+          const el = document.querySelector(
+            `input[name="${firstInvalidInput}"]`
+          );
+          if (el) {
+            el.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          }
+
+          const errors = err.inner.reduce((errors, error) => {
+            const fieldName = error.path;
+            if (!fieldName) return errors;
+
+            if (!errors[fieldName]) {
+              errors[fieldName] = error.message;
+            }
+
+            return errors;
+          }, {} as Record<string, string>);
+
+          setErrorMessages((currentErrorMessages) => ({
+            ...currentErrorMessages,
+            ...errors,
+          }));
+        });
+
       return;
     }
 
-    setErrors([]);
     setIsLoading(true);
 
     axios
       .post("https://api.escuelajs.co/api/v1/users/", {
-        name: formValues.firstName + " " + formValues.lastName,
-        email: formValues.email,
-        password: formValues.password,
+        name:
+          normalizedFormValues.firstName + " " + normalizedFormValues.lastName,
+        email: normalizedFormValues.email,
+        password: normalizedFormValues.password,
         avatar: "https://i.pravatar.cc/100",
       })
-      .then(() => dispatch(loginUser(formValues.email, formValues.password)))
+      .then(() =>
+        dispatch(
+          loginUser(normalizedFormValues.email, normalizedFormValues.password)
+        )
+      )
       .then(() => navigate(Routes.Homepage))
       .catch((err) => {
         const errMessages = err.response.data.message;
@@ -300,9 +290,15 @@ const Register = () => {
   };
 
   return (
-    <Container className="mb-4">
-      <div className="w-lg-50 mx-auto">
-        <PageHeader>Create Account</PageHeader>
+    <Container
+      fluid
+      className={classNames(
+        "mb-4 d-flex justify-content-center align-items-center",
+        styles.body
+      )}
+    >
+      <div className="w-lg-50 mx-auto px-4 py-5 rounded">
+        <PageHeader className={styles.title}>Create Account</PageHeader>
         <Form onSubmit={handleFormSubmit} noValidate>
           <Row className="gx-3 gy-4">
             <Col lg={6}>

@@ -3,9 +3,12 @@ import { Container, Row, Col } from "react-bootstrap";
 import Aside from "./Aside/Aside";
 import Products from "./Products/Products";
 
+import classNames from "classnames";
+import styles from "./Homepage.module.scss";
+
 const Homepage = () => {
   return (
-    <div className="Homepage">
+    <div className={classNames("Homepage", styles.margin)}>
       <Container>
         <Row>
           <Col xs={false} lg={3}>
