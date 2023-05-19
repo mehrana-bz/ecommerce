@@ -8,5 +8,5 @@
 
 
 .middleLoginBox {
-    min-height: calc(90vh - ($header-height + $header-margin-bottom + $header-margin-bottom));
+    min-height: calc(90vh - ($header-height + $header-margin-top + $header-margin-top));
 }

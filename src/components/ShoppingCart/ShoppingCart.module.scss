@@ -1,5 +1,9 @@
+@import "../../styles/variables";
 @import "~bootstrap/scss/bootstrap-utilities";
 
+.margin{
+  margin-top: $header-margin-top;
+}
 .pics {
   object-fit: cover;
   object-position: center;

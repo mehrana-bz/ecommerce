@@ -1,6 +1,22 @@
 @import "~bootstrap/scss/bootstrap-utilities";
+
+
+body{
+  background-color: #f0f2f5;
+  background-image: url("../../../public/formPageBackground.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+.title{
+  color: #2d385e;
+}
+
+
 .label {
-  color: $blue-600;
+  color: #2d385e;
   margin-bottom: 0;
 }
 .errorMessages {

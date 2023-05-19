@@ -25,6 +25,7 @@ const loginValidationSchema = Yup.object().shape({
   password: Yup.string().required().min(8).max(12),
 });
 
+
 const Login = () => {
 
   const dispatch = useAppDispatch();
@@ -69,20 +70,6 @@ const Login = () => {
             ...currentErrorMessages,
             ...errors,
           }))
-
-          // SECOND SOLUTION
-
-          // err.inner.forEach((error) => {
-          //   const fieldName = error.path;
-          //   if(!fieldName) return;
-
-          //   setErrorMessages((currentErrorMessages) => (
-          //     {
-          //       ...currentErrorMessages,
-          //       [fieldName] : error.message,
-          //     }
-          //   ))
-          // })
       })
 
       return;
