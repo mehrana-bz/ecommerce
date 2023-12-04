@@ -1,27 +1,58 @@
+@import "../../styles/variables";
 @import "~bootstrap/scss/bootstrap-utilities";
 
+// .background{
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
+//   z-index: -1;
+//   background-color: #f0f2f5;
+//   background-image: url("../../../public/formPageBackground.jpg");
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   background-position: 100%;
+//   text-rendering: optimizeLegibility;
+// }
 
-body{
-  background-color: #f0f2f5;
-  background-image: url("../../../public/formPageBackground.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 100%;
-  text-rendering: optimizeLegibility;
+.title {
+  color: #465eb5;
 }
-
-.title{
-  color: #2d385e;
-}
-
 
 .label {
-  color: #2d385e;
+  color: #465eb5;
   margin-bottom: 0;
 }
 .errorMessages {
   font-size: 13px;
 }
-.error{
+.error {
   display: block;
+}
+.marginTopForForm {
+  margin-top: $header-margin-top;
+}
+
+
+@media (min-width: 768px) { 
+  .responsiveRow{
+    position: relative;
+  }
+
+  .blackLayerStyle {
+    position: absolute;
+    top: 40px;
+    bottom: 40px;
+    right: 0;
+    left: 0;
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+  }
+  
+}
+
+.midContent{
+  min-height: calc(100vh - $header-height);
 }
