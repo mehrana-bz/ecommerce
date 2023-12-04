@@ -1,12 +1,43 @@
 @import "~bootstrap/scss/bootstrap-utilities";
 @import "../../styles/variables";
 
+
 .label {
   color: $blue-600;
   margin-bottom: 0;
 }
 
-
 .middleLoginBox {
-    min-height: calc(90vh - ($header-height + $header-margin-top + $header-margin-top));
+  min-height: calc(
+    90vh - ($header-height + $header-margin-top + $header-margin-top)
+  );
 }
+
+
+  
+
+  @media (max-width: 576px) {
+    .wXS {
+      width: 75%;
+    }
+  }
+  @media (min-width: 576px) {
+    .wS {
+      width: 50%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .wMd {
+      width: 50%;
+    }
+  }
+  @media (min-width: 1200px) {
+    .wXl {
+      width: 25%;
+    }
+  }
+
+  .midContent{
+    min-height: calc(100vh - $header-height);
+  }

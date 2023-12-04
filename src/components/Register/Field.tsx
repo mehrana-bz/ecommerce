@@ -57,7 +57,7 @@ const Field = ({
 
   return (
     <Form.Group controlId={name}>
-      <Form.Label className={classNames("d-block", styles.label)}>
+      <Form.Label className={classNames("d-block", styles.label, styles.title)}>
         {title}
       </Form.Label>
       {isNotMultiSelect(otherProps) && (

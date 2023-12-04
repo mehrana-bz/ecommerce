@@ -4,8 +4,8 @@ const Routes = {
   Product: "/product/:id",
   Bookmarks: "/bookmarks",
   ShoppingCart: "/cart",
-  Register: "register",
-  Login: "login",
+  Register: "/register",
+  Login: "/login",
 } as const;
 
 export default Routes;

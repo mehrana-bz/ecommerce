@@ -1,16 +1,8 @@
-import {
-  Alert,
-  Button,
-  Col,
-  Container,
-  Form,
-  Row,
-  Spinner,
-} from "react-bootstrap";
+import { Alert, Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import classNames from "classnames";
 import { FocusEvent, FormEvent, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 import styles from "./Register.module.scss";
@@ -19,6 +11,7 @@ import Routes from "../../Routes/Routes";
 import PageHeader from "../PageHeaders/PageHeader";
 import { useAppDispatch } from "../../store/hooks";
 import Field from "./Field";
+import TwoBoxLayout from "../TwoBoxLayout/TwoBoxLayout";
 
 interface FormValues {
   firstName: string;
@@ -290,203 +283,219 @@ const Register = () => {
   };
 
   return (
-    <Container
-      fluid
-      className={classNames(
-        "mb-4 d-flex justify-content-center align-items-center",
-        styles.body
-      )}
-    >
-      <div className="w-lg-50 mx-auto px-4 py-5 rounded">
-        <PageHeader className={styles.title}>Create Account</PageHeader>
-        <Form onSubmit={handleFormSubmit} noValidate>
-          <Row className="gx-3 gy-4">
-            <Col lg={6}>
-              <Field
-                name="firstName"
-                title="Firstname*"
-                type="text"
-                placeholder="Enter your firstname..."
-                onChange={handleInput}
-                value={formValues.firstName}
-                onBlur={validateInput}
-                onFocus={resetValidation}
-                err={errorMessages.firstName}
-              />
-            </Col>
-            <Col lg={6}>
-              <Field
-                type="text"
-                placeholder="Enter your lastname..."
-                name="lastName"
-                title="Lastname*"
-                onChange={handleInput}
-                onBlur={validateInput}
-                onFocus={resetValidation}
-                value={formValues.lastName}
-                err={errorMessages.lastName}
-              />
-            </Col>
-            <Col lg={12}>
-              <Field
-                type="email"
-                title="Email*"
-                placeholder="Enter your email..."
-                name="email"
-                onChange={handleInput}
-                onBlur={validateInput}
-                onFocus={resetValidation}
-                value={formValues.email}
-                err={errorMessages.email}
-              />
-            </Col>
-            <Col lg={6}>
-              <Field
-                type="password"
-                title="Password*"
-                placeholder="Enter your password..."
-                name="password"
-                onChange={handleInput}
-                onBlur={validateInput}
-                onFocus={resetValidation}
-                value={formValues.password}
-                err={errorMessages.password}
-              />
-            </Col>
-            <Col lg={6}>
-              <Field
-                type="password"
-                title="Confirm Password*"
-                placeholder="Enter your password again..."
-                name="confirmPassword"
-                onChange={handleInput}
-                onBlur={validateInput}
-                onFocus={resetValidation}
-                value={formValues.confirmPassword}
-                err={errorMessages.confirmPassword}
-              />
-            </Col>
-            <Col lg={6}>
-              <Field
-                type="radio"
-                title="Gender*"
-                options={genderOptions}
-                name="gender"
-                onChange={handleInput}
-                onBlur={validateInput}
-                onFocus={resetValidation}
-                err={errorMessages.gender}
-              />
-            </Col>
-            <Col lg={6}>
-              <Field
-                type="checkbox"
-                title="Hobbies"
-                options={hobbiesOptions}
-                name="hobbies"
-                onBlur={validateInput}
-                onFocus={resetValidation}
-                onChange={handleMultiSelectCheckboxChange}
-                err={errorMessages.hobbies}
-              />
-            </Col>
-            <Col lg={6}>
-              <Form.Group controlId="userType">
-                <Form.Label className={classNames("d-block", styles.label)}>
-                  Type of User
-                </Form.Label>
-                <Form.Select
-                  name="userType"
-                  // @ts-ignore
+    <div className={classNames("d-flex align-items-center justify-content-center", styles.midContent)}>
+      <TwoBoxLayout
+      leftChild={
+        <>
+          <PageHeader className={styles.title}>Create Account</PageHeader>
+          <Form onSubmit={handleFormSubmit} noValidate>
+            <Row className="gx-3 gy-4">
+              <Col lg={6}>
+                <Field
+                  name="firstName"
+                  title="Firstname*"
+                  type="text"
+                  placeholder="Enter your firstname..."
                   onChange={handleInput}
-                  value={formValues.userType}
-                  // @ts-ignore
-                  onBlur={validateInput}
-                  // @ts-ignore
-                  onFocus={resetValidation}
-                  isInvalid={errorMessages.userType.length > 0}
-                >
-                  <option disabled value="">
-                    choose your job position
-                  </option>
-                  <option value="customer">Customer</option>
-                  <option value="admin">Admin</option>
-                </Form.Select>
-                <Form.Control.Feedback
-                  type="invalid"
-                  className={styles.errorMessages}
-                >
-                  {errorMessages.userType}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-            <Col lg={6}>
-              <Form.Group controlId="formFileSm">
-                <Form.Label className={classNames("d-block", styles.label)}>
-                  Upload Profile Picture
-                </Form.Label>
-                <Form.Control type="file" />
-              </Form.Group>
-            </Col>
-            <Col lg={6}>
-              <Form.Group className="d-flex gap-1">
-                <Form.Check
-                  inline
-                  required
-                  type="checkbox"
-                  className="me-0"
-                  name="rule"
-                  label="I agree with terms and conditions."
-                  feedback="You must agree before submitting."
+                  value={formValues.firstName}
                   onBlur={validateInput}
                   onFocus={resetValidation}
-                  feedbackType="invalid"
-                  onChange={handleInput}
-                  checked={formValues.rule}
-                  id="rule"
-                  isInvalid={errorMessages.rule.length > 0}
+                  err={errorMessages.firstName}
                 />
-              </Form.Group>
-            </Col>
-            {errors.length > 0 && (
-              <Col xs={12}>
-                <Alert variant="danger">
-                  <ul className="m-0">
-                    {errors.map((error, index) => (
-                      <li
-                        className={classNames(" lh-sm", styles.errorMessages)}
-                        key={index}
-                      >
-                        {error}
-                      </li>
-                    ))}
-                  </ul>
-                </Alert>
               </Col>
-            )}
-            <Col xs={12}>
-              <Button
-                variant="primary"
-                type="submit"
-                disabled={isLoading}
-                className="d-flex gap-2 align-items-center"
-              >
-                {isLoading && (
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
+              <Col lg={6}>
+                <Field
+                  type="text"
+                  placeholder="Enter your lastname..."
+                  name="lastName"
+                  title="Lastname*"
+                  onChange={handleInput}
+                  onBlur={validateInput}
+                  onFocus={resetValidation}
+                  value={formValues.lastName}
+                  err={errorMessages.lastName}
+                />
+              </Col>
+              <Col lg={12}>
+                <Field
+                  type="email"
+                  title="Email*"
+                  placeholder="Enter your email..."
+                  name="email"
+                  onChange={handleInput}
+                  onBlur={validateInput}
+                  onFocus={resetValidation}
+                  value={formValues.email}
+                  err={errorMessages.email}
+                />
+              </Col>
+              <Col lg={6}>
+                <Field
+                  type="password"
+                  title="Password*"
+                  placeholder="Enter your password..."
+                  name="password"
+                  onChange={handleInput}
+                  onBlur={validateInput}
+                  onFocus={resetValidation}
+                  value={formValues.password}
+                  err={errorMessages.password}
+                />
+              </Col>
+              <Col lg={6}>
+                <Field
+                  type="password"
+                  title="Confirm Password*"
+                  placeholder="Enter your password again..."
+                  name="confirmPassword"
+                  onChange={handleInput}
+                  onBlur={validateInput}
+                  onFocus={resetValidation}
+                  value={formValues.confirmPassword}
+                  err={errorMessages.confirmPassword}
+                />
+              </Col>
+              <Col lg={6}>
+                <Field
+                  type="radio"
+                  title="Gender*"
+                  options={genderOptions}
+                  name="gender"
+                  onChange={handleInput}
+                  onBlur={validateInput}
+                  onFocus={resetValidation}
+                  err={errorMessages.gender}
+                />
+              </Col>
+              <Col lg={6}>
+                <Field
+                  type="checkbox"
+                  title="Hobbies"
+                  options={hobbiesOptions}
+                  name="hobbies"
+                  onBlur={validateInput}
+                  onFocus={resetValidation}
+                  onChange={handleMultiSelectCheckboxChange}
+                  err={errorMessages.hobbies}
+                />
+              </Col>
+              <Col lg={6}>
+                <Form.Group controlId="userType">
+                  <Form.Label className={classNames("d-block", styles.label)}>
+                    Type of User
+                  </Form.Label>
+                  <Form.Select
+                    name="userType"
+                    // @ts-ignore
+                    onChange={handleInput}
+                    value={formValues.userType}
+                    // @ts-ignore
+                    onBlur={validateInput}
+                    // @ts-ignore
+                    onFocus={resetValidation}
+                    isInvalid={errorMessages.userType.length > 0}
+                  >
+                    <option disabled value="">
+                      choose your job position
+                    </option>
+                    <option value="customer">Customer</option>
+                    <option value="admin">Admin</option>
+                  </Form.Select>
+                  <Form.Control.Feedback
+                    type="invalid"
+                    className={styles.errorMessages}
+                  >
+                    {errorMessages.userType}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col lg={6}>
+                <Form.Group controlId="formFileSm">
+                  <Form.Label className={classNames("d-block", styles.label)}>
+                    Upload Profile Picture
+                  </Form.Label>
+                  <Form.Control type="file" />
+                </Form.Group>
+              </Col>
+              <Col lg={6}>
+                <Form.Group className="d-flex gap-1">
+                  <Form.Check
+                    inline
+                    required
+                    type="checkbox"
+                    className="me-0"
+                    name="rule"
+                    label="I agree with terms and conditions."
+                    feedback="You must agree before submitting."
+                    onBlur={validateInput}
+                    onFocus={resetValidation}
+                    feedbackType="invalid"
+                    onChange={handleInput}
+                    checked={formValues.rule}
+                    id="rule"
+                    isInvalid={errorMessages.rule.length > 0}
                   />
-                )}
-                Register
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-      </div>
-    </Container>
+                </Form.Group>
+              </Col>
+              {errors.length > 0 && (
+                <Col xs={12}>
+                  <Alert variant="danger">
+                    <ul className="m-0">
+                      {errors.map((error, index) => (
+                        <li
+                          className={classNames(" lh-sm", styles.errorMessages)}
+                          key={index}
+                        >
+                          {error}
+                        </li>
+                      ))}
+                    </ul>
+                  </Alert>
+                </Col>
+              )}
+              <Col xs={12}>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  disabled={isLoading}
+                  className="d-flex gap-2 align-items-center"
+                >
+                  {isLoading && (
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  )}
+                  Register
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </>
+      }
+      rightChild={
+        <>
+          <div className="d-none d-md-block">
+            <h3>Have an account?</h3>
+            <p className="my-4">
+              Welcome back! If you're already part of our network, Login to
+              enjoy all the benefits and features we have to offer.
+            </p>
+            <Link to={Routes.Login}>
+              <Button variant="outline-light px-5">LOGIN</Button>
+            </Link>
+          </div>
+          <div className="d-flex d-md-none gap-3 align-items-center">
+            <h3 className="text-black-50">Have an account?</h3>
+            <Link to={Routes.Login}>LOGIN</Link>
+          </div>
+        </>
+      }
+    />
+    </div>
   );
 };
 export default Register;
